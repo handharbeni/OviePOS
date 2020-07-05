@@ -4,8 +4,10 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(indices = { @Index(value = {"id"}, unique = true) })
-public class Cart {
+import java.io.Serializable;
+
+@Entity(indices = {@Index(value = {"id"}, unique = true)})
+public class Cart implements Serializable {
     @PrimaryKey(autoGenerate = true)
     int id;
     int productId;

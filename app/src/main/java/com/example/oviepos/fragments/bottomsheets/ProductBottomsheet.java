@@ -107,12 +107,12 @@ public class ProductBottomsheet extends BaseBottomFragments {
 
     void initSpinner() {
         String[] aCategory = new String[listProductCategory.size()];
-        int i=0;
+        int i = 0;
         int selected = 0;
-        for (ProductsCategory productsCategory : listProductCategory){
-            aCategory[i]=productsCategory.getCategoryName();
-            if (products != null){
-                if (productsCategory.getId() == products.getProductCategory()){
+        for (ProductsCategory productsCategory : listProductCategory) {
+            aCategory[i] = productsCategory.getCategoryName();
+            if (products != null) {
+                if (productsCategory.getId() == products.getProductCategory()) {
                     selected = i;
                 }
             }

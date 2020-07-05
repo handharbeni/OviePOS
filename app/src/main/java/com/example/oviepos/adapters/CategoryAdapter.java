@@ -40,9 +40,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductsCategory productsCategory = listCategory.get(position);
         holder.bindData(productsCategory);
-        holder.itemView.setOnClickListener(view -> {
-            interfaceCategoryAdapter.onCategoryClick(productsCategory);
-        });
+        holder.itemView.setOnClickListener(view -> interfaceCategoryAdapter.onCategoryClick(productsCategory));
     }
 
     @Override
@@ -50,7 +48,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return listCategory.size();
     }
 
-    public void updateData(List<ProductsCategory> listCategory){
+    public void updateData(List<ProductsCategory> listCategory) {
         this.listCategory.clear();
         this.listCategory = listCategory;
         notifyDataSetChanged();
@@ -65,12 +63,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(ProductsCategory category){
+        public void bindData(ProductsCategory category) {
             itemCategory.setText(category.getCategoryName());
         }
     }
 
-    public interface InterfaceCategoryAdapter{
+    public interface InterfaceCategoryAdapter {
         void onCategoryClick(ProductsCategory productsCategory);
     }
 }

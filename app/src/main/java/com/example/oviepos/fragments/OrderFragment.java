@@ -26,7 +26,7 @@ public class OrderFragment extends BaseFragments {
     @BindView(R.id.frameCart)
     FrameLayout frameCart;
 
-    public static OrderFragment getInstance(){
+    public static OrderFragment getInstance() {
         return new OrderFragment();
     }
 
@@ -41,13 +41,13 @@ public class OrderFragment extends BaseFragments {
         return view;
     }
 
-    void init(){
+    void init() {
         ButterKnife.bind(this, view);
         fillFragment(R.id.frameProduct, ProductFragment.getInstance(true));
         fillFragment(R.id.frameCart, CartFragment.getInstance());
     }
 
-    private void fillFragment(int frame, Fragment fragment){
+    private void fillFragment(int frame, Fragment fragment) {
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(frame, fragment);

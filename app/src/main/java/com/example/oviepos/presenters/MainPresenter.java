@@ -1,25 +1,25 @@
 package com.example.oviepos.presenters;
 
-import android.Manifest;
 import android.app.Activity;
 import android.os.CountDownTimer;
 
 import androidx.lifecycle.LifecycleOwner;
 
+import com.example.oviepos.R;
 import com.example.oviepos.utils.AppPreferences;
 import com.example.oviepos.utils.Constants;
 import com.example.oviepos.views.MainUIView;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.manishkprboilerplate.base.BasePresenter;
 
 import java.util.List;
+import java.util.Objects;
 
 import rx.Subscription;
 
@@ -27,11 +27,13 @@ public class MainPresenter extends BasePresenter<MainUIView> {
     Activity activity;
     private Subscription subscription;
     private LifecycleOwner lifecycleOwner;
-    final String TAG = MainPresenter.class.getSimpleName().toString();
+    private MaterialButtonToggleGroup buttonToggleGroup;
+    final String TAG = MainPresenter.class.getSimpleName();
 
-    public MainPresenter(Activity activity, LifecycleOwner lifecycleOwner) {
+    public MainPresenter(Activity activity, LifecycleOwner lifecycleOwner, MaterialButtonToggleGroup buttonToggleGroup) {
         this.activity = activity;
         this.lifecycleOwner = lifecycleOwner;
+        this.buttonToggleGroup = buttonToggleGroup;
     }
 
     @Override
@@ -49,8 +51,8 @@ public class MainPresenter extends BasePresenter<MainUIView> {
         requestPermission();
     }
 
-    public void countDownDecision(){
-        new CountDownTimer(2000, 1000){
+    public void countDownDecision() {
+        new CountDownTimer(2000, 1000) {
             @Override
             public void onTick(long l) {
 
@@ -68,6 +70,27 @@ public class MainPresenter extends BasePresenter<MainUIView> {
                 .getPref(Constants.STATE_LOGIN, false);
         if (stateLogin) {
             getMvpView().mainScreen();
+            buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+                if (group.getCheckedButtonId() != -1) {
+                    switch (group.getCheckedButtonId()) {
+                        case R.id.productCategory:
+                            getMvpView().fragmentCategory();
+                            break;
+                        case R.id.product:
+                            getMvpView().fragmentProduct();
+                            break;
+                        case R.id.report:
+                            getMvpView().fragmentReport();
+                            break;
+                        case R.id.account:
+                            getMvpView().fragmentAccount();
+                            break;
+                    }
+                } else {
+                    getMvpView().fragmentCart();
+                }
+
+            });
         } else {
             getMvpView().loginScreen();
         }
@@ -99,27 +122,27 @@ public class MainPresenter extends BasePresenter<MainUIView> {
                 .check();
     }
 
-    public void doLogin(TextInputLayout txtUsername, TextInputLayout txtPassword){
-        if (!validate(txtUsername) || !validate(txtPassword)){
+    public void doLogin(TextInputLayout txtUsername, TextInputLayout txtPassword) {
+        if (isValidated(txtUsername) || isValidated(txtPassword)) {
             return;
         }
         AppPreferences.getInstance(activity.getApplicationContext())
-                .setPref(Constants.USERNAME, txtUsername.getEditText().getText().toString());
+                .setPref(Constants.USERNAME, Objects.requireNonNull(txtUsername.getEditText()).getText().toString());
         AppPreferences.getInstance(activity.getApplicationContext())
                 .setPref(Constants.STATE_LOGIN, true);
         getMvpView().loginSuccess();
     }
 
-    boolean validate(TextInputLayout textInputLayout){
+    boolean isValidated(TextInputLayout textInputLayout) {
         textInputLayout.setError(null);
-        if (textInputLayout.getEditText().getText().toString().isEmpty()){
+        if (Objects.requireNonNull(textInputLayout.getEditText()).getText().toString().isEmpty()) {
             textInputLayout.setError("CANNOT BE NULL");
             return false;
         }
         return true;
     }
 
-    public void doRegister(){
+    public void doRegister() {
         getMvpView().registerSuccess();
     }
 }

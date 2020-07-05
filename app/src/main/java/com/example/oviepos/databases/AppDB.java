@@ -33,8 +33,11 @@ import com.example.oviepos.utils.Constants;
 )
 public abstract class AppDB extends RoomDatabase {
     public abstract InterfaceProductCategory productCategory();
+
     public abstract InterfaceProducts products();
+
     public abstract InterfaceCart cart();
+
     public abstract InterfaceTransactions transactions();
 
     private static volatile AppDB INSTANCE;

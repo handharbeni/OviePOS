@@ -17,7 +17,7 @@ public class CategoryPresenter extends BasePresenter<CategoryUIView> {
     Activity activity;
     private LifecycleOwner lifecycleOwner;
     private Subscription subscription;
-    final String TAG = CategoryPresenter.class.getSimpleName().toString();
+    final String TAG = CategoryPresenter.class.getSimpleName();
 
     public CategoryPresenter(Activity activity, LifecycleOwner lifecycleOwner) {
         this.activity = activity;
@@ -34,35 +34,35 @@ public class CategoryPresenter extends BasePresenter<CategoryUIView> {
         super.detachView();
     }
 
-    public void init(){
+    public void init() {
         List<ProductsCategory> listCategory = AppDB.getInstance(activity.getApplicationContext())
                 .productCategory()
                 .getAll();
         getMvpView().showAllData(listCategory);
     }
 
-    public void updateData(){
+    public void updateData() {
         List<ProductsCategory> listCategory = AppDB.getInstance(activity.getApplicationContext())
                 .productCategory()
                 .getAll();
         getMvpView().updateData(listCategory);
     }
 
-    public void createCategory(ProductsCategory productsCategory){
+    public void createCategory(ProductsCategory productsCategory) {
         AppDB.getInstance(activity.getApplicationContext())
                 .productCategory()
                 .insert(productsCategory);
         getMvpView().processSuccess();
     }
 
-    public void updateCategory(ProductsCategory productsCategory){
+    public void updateCategory(ProductsCategory productsCategory) {
         AppDB.getInstance(activity.getApplicationContext())
                 .productCategory()
                 .update(productsCategory);
         getMvpView().processSuccess();
     }
 
-    public void deleteCategory(ProductsCategory productsCategory){
+    public void deleteCategory(ProductsCategory productsCategory) {
         AppDB.getInstance(activity.getApplicationContext())
                 .productCategory()
                 .delete(productsCategory);

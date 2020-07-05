@@ -14,10 +14,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class BaseBottomFragments extends BottomSheetDialogFragment {
-    public Activity getActivityInstance(Context context){
+    public Activity getActivityInstance(Context context) {
         Activity a = null;
-        if (context instanceof Activity){
-            a=(Activity) context;
+        if (context instanceof Activity) {
+            a = (Activity) context;
         }
         return a;
     }

@@ -4,8 +4,10 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(indices = { @Index(value = {"id"}, unique = true) })
-public class Transactions {
+import java.io.Serializable;
+
+@Entity(indices = {@Index(value = {"id"}, unique = true)})
+public class Transactions implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private Integer id;
     private String productId;

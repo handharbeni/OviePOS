@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">OviePOS</string>
+    <string name="label_category">KATEGORI PRODUK</string>
+    <string name="label_product">PRODUK</string>
+    <string name="label_report">LAPORAN</string>
+    <string name="label_account">AKUN</string>
+    <string name="label_cart">KERANJANG</string>
 </resources>

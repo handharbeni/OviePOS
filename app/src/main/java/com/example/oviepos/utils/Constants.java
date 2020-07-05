@@ -21,63 +21,63 @@ public class Constants {
     };
 
     public static enum TRANSACTION_TYPE {
-        TAKE_AWAY ("TAKE AWAY"),
-        DINE_IN ("DINE IN");
+        TAKE_AWAY("TAKE AWAY"),
+        DINE_IN("DINE IN");
 
         private final String name;
 
-        private TRANSACTION_TYPE(String s){
+        private TRANSACTION_TYPE(String s) {
             name = s;
         }
 
-        public boolean equalsName(String otherName){
+        public boolean equalsName(String otherName) {
             return name.equals(otherName);
         }
 
-        public String toString(){
+        public String toString() {
             return this.name;
         }
     }
 
     public static enum PAYMENT_TYPE {
-        CASH ("CASH"),
-        CASHLESS ("CASHLESS");
+        CASH("CASH"),
+        CASHLESS("CASHLESS");
 
         private final String name;
 
-        private PAYMENT_TYPE(String s){
+        private PAYMENT_TYPE(String s) {
             name = s;
         }
 
-        public boolean equalsName(String otherName){
+        public boolean equalsName(String otherName) {
             return name.equals(otherName);
         }
 
-        public String toString(){
+        public String toString() {
             return this.name;
         }
     }
 
     public static enum PAYMENT_CASHLESS {
-        BCA ("BCA"),
-        BRI ("BRI"),
-        MANDIRI ("MANDIRI"),
-        CIMB ("CIMB"),
-        OVO ("OVO"),
-        DANA ("DANA"),
-        GOPAY ("GOPAY");
+        BCA("BCA"),
+        BRI("BRI"),
+        MANDIRI("MANDIRI"),
+        CIMB("CIMB"),
+        OVO("OVO"),
+        DANA("DANA"),
+        GOPAY("GOPAY");
 
         private final String name;
 
-        private PAYMENT_CASHLESS(String s){
+        private PAYMENT_CASHLESS(String s) {
             name = s;
         }
 
-        public boolean equalsName(String otherName){
+        public boolean equalsName(String otherName) {
             return name.equals(otherName);
         }
 
-        public String toString(){
+        public String toString() {
             return this.name;
         }
     }

@@ -6,7 +6,7 @@ import androidx.multidex.MultiDexApplication;
 
 import org.jetbrains.annotations.Contract;
 
-public class CoreApplication  extends MultiDexApplication {
+public class CoreApplication extends MultiDexApplication {
     private static Application instances;
 
     @Override
@@ -17,7 +17,7 @@ public class CoreApplication  extends MultiDexApplication {
     }
 
     @Contract(pure = true)
-    public static Application getInstance(){
+    public static Application getInstance() {
         return instances;
     }
 }

@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
     private Context context;
-    private List<Products> listProducts = new ArrayList<>();
+    private List<Products> listProducts;
     private ProductsAdapterCallback productsAdapterCallback;
 
     public ProductsAdapter(Context context, List<Products> listProducts, ProductsAdapterCallback productsAdapterCallback) {
@@ -48,9 +48,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Products products = listProducts.get(position);
         holder.bindData(products);
-        holder.itemView.setOnClickListener(view -> {
-            productsAdapterCallback.onProductsClick(products);
-        });
+        holder.itemView.setOnClickListener(view -> productsAdapterCallback.onProductsClick(products));
     }
 
     @Override
@@ -58,7 +56,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         return listProducts.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.productImage)
         ImageView productImage;
         @BindView(R.id.productTitle)
@@ -69,19 +67,19 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(Products products){
+        public void bindData(Products products) {
             Glide.with(itemView).load(products.getProductImage()).into(productImage);
             productTitle.setText(products.getProductName());
         }
     }
 
-    public void update(List<Products> listProducts){
+    public void update(List<Products> listProducts) {
         this.listProducts.clear();
         this.listProducts = listProducts;
         notifyDataSetChanged();
     }
 
-    public interface ProductsAdapterCallback{
+    public interface ProductsAdapterCallback {
         void onProductsClick(Products products);
     }
 }

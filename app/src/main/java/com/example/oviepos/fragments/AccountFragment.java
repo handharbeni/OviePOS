@@ -66,7 +66,7 @@ public class AccountFragment extends BaseFragments implements AccountUIView {
     }
 
     @OnClick(R.id.btnLogout)
-    public void doLogout(){
+    public void doLogout() {
         accountPresenter.doLogout();
     }
 

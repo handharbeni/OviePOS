@@ -33,13 +33,13 @@ public class AccountPresenter extends BasePresenter<AccountUIView> {
         super.detachView();
     }
 
-    public void init(){
+    public void init() {
         String username = AppPreferences.getInstance(activity.getApplicationContext())
                 .getPref(Constants.USERNAME, "KOSONG");
         getMvpView().fillProfile(username);
     }
 
-    public void doLogout(){
+    public void doLogout() {
         AppPreferences.getInstance(activity.getApplicationContext())
                 .setPref(Constants.STATE_LOGIN, false);
         getMvpView().logoutSuccess();

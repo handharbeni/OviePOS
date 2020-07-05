@@ -18,7 +18,8 @@ public class DataConverter {
             return Collections.emptyList();
         }
 
-        Type listType = new TypeToken<List<Object>>() {}.getType();
+        Type listType = new TypeToken<List<Object>>() {
+        }.getType();
 
         return gson.fromJson(data, listType);
     }

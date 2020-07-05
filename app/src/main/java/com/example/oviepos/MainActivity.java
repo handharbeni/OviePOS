@@ -1,5 +1,10 @@
 package com.example.oviepos;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -7,20 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.Toast;
-
+import com.example.oviepos.callbacks.AccountCallback;
 import com.example.oviepos.fragments.AccountFragment;
-import com.example.oviepos.fragments.CartFragment;
 import com.example.oviepos.fragments.CategoryFragment;
 import com.example.oviepos.fragments.OrderFragment;
 import com.example.oviepos.fragments.ProductFragment;
 import com.example.oviepos.presenters.MainPresenter;
 import com.example.oviepos.utils.BaseActivity;
-import com.example.oviepos.callbacks.AccountCallback;
 import com.example.oviepos.views.MainUIView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
@@ -79,45 +77,15 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init(savedInstanceState);
+        init();
     }
 
-    void init(Bundle saveInstanceState) {
+    void init() {
         ButterKnife.bind(this);
-        mainPresenter = new MainPresenter(this, this);
+        mainPresenter = new MainPresenter(this, this, btnGroup);
         mainPresenter.attachView(this);
 
         mainPresenter.init();
-
-        btnGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            Fragment fragment;
-            if (group.getCheckedButtonId() != -1){
-                switch (group.getCheckedButtonId()){
-                    case R.id.productCategory:
-                        txtTitle.setText("Kategori Produk");
-                        fragment = CategoryFragment.getInstance();
-                        fillFragment(fragment);
-                        break;
-                    case R.id.product:
-                        txtTitle.setText("Produk");
-                        fragment = ProductFragment.getInstance(false);
-                        fillFragment(fragment);
-                        break;
-                    case R.id.report:
-                        txtTitle.setText("Laporan");
-                        break;
-                    case R.id.account:
-                        txtTitle.setText("Akun");
-                        fragment = AccountFragment.getInstance();
-                        fillFragment(fragment);
-                        break;
-                }
-            }else{
-                txtTitle.setText("Keranjang");
-                fragment = OrderFragment.getInstance();
-                fillFragment(fragment);
-            }
-        });
     }
 
     @OnClick({
@@ -130,7 +98,6 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
             R.id.fabOrder
     })
     public void onButtonClick(View view) {
-        Fragment fragment;
         switch (view.getId()) {
             case R.id.btnLogin:
                 mainPresenter.doLogin(txtUsername, txtPassword);
@@ -140,9 +107,6 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
                 break;
             case R.id.fabOrder:
                 btnGroup.clearChecked();
-//                txtTitle.setText("Keranjang");
-//                fragment = OrderFragment.getInstance();
-//                fillFragment(fragment);
                 break;
         }
     }
@@ -190,22 +154,33 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     @Override
     public void fragmentCategory() {
-
+        txtTitle.setText(R.string.label_category);
+        fillFragment(CategoryFragment.getInstance());
     }
 
     @Override
     public void fragmentProduct() {
-
+        txtTitle.setText(R.string.label_product);
+        fillFragment(ProductFragment.getInstance(false));
     }
 
     @Override
     public void fragmentReport() {
-
+        txtTitle.setText(R.string.label_report);
+//        fillFragment(ReportFragment.getInstance());
     }
 
     @Override
     public void fragmentAccount() {
+        txtTitle.setText(R.string.label_account);
+        fillFragment(AccountFragment.getInstance());
 
+    }
+
+    @Override
+    public void fragmentCart() {
+        txtTitle.setText(R.string.label_cart);
+        fillFragment(OrderFragment.getInstance());
     }
 
     @Override

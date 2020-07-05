@@ -70,21 +70,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(Cart cart){
+        public void bindData(Cart cart) {
             txtProductName.setText(cart.getProductName());
             txtProductPrice.setText(cart.getProductPrice());
             txtQty.setText(String.valueOf(cart.getQty()));
         }
     }
 
-    public void update(List<Cart> listCart){
+    public void update(List<Cart> listCart) {
         this.listCart.clear();
         this.listCart = listCart;
         notifyDataSetChanged();
     }
 
-    public interface CartAdapterInterface{
+    public interface CartAdapterInterface {
         void onAddClick(Cart cart);
+
         void onRemoveClick(Cart cart);
     }
 }

@@ -20,7 +20,7 @@ public class CartPresenter extends BasePresenter<CartUIView> {
     Activity activity;
     private LifecycleOwner lifecycleOwner;
     private Subscription subscription;
-    final String TAG = CategoryPresenter.class.getSimpleName().toString();
+    final String TAG = CategoryPresenter.class.getSimpleName();
     private AppDB appDB;
     private LiveData<List<Cart>> liveCart;
 
@@ -38,27 +38,27 @@ public class CartPresenter extends BasePresenter<CartUIView> {
     @Override
     public void detachView() {
         super.detachView();
-        if (liveCart.hasActiveObservers()){
+        if (liveCart.hasActiveObservers()) {
             liveCart.removeObservers(lifecycleOwner);
         }
     }
 
-    public void init(){
+    public void init() {
         getMvpView().showAllCart(appDB.cart().getAll());
         liveCart = appDB.cart().liveCart();
         liveCart.observe(lifecycleOwner, carts -> getMvpView().updateData(carts));
     }
 
-    public void addQty(Cart cart){
-        cart.setQty(cart.getQty()+1);
+    public void addQty(Cart cart) {
+        cart.setQty(cart.getQty() + 1);
         appDB.cart().update(cart);
     }
 
-    public void removeQty(Cart cart){
-        if (cart.getQty() <= 1){
+    public void removeQty(Cart cart) {
+        if (cart.getQty() <= 1) {
             appDB.cart().delete(cart);
-        }else{
-            cart.setQty(cart.getQty()-1);
+        } else {
+            cart.setQty(cart.getQty() - 1);
             appDB.cart().update(cart);
         }
     }

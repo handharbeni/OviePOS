@@ -18,7 +18,7 @@ public class ProductsPresenter extends BasePresenter<ProductUIView> {
     Activity activity;
     private LifecycleOwner lifecycleOwner;
     private Subscription subscription;
-    final String TAG = CategoryPresenter.class.getSimpleName().toString();
+    final String TAG = CategoryPresenter.class.getSimpleName();
     private AppDB appDB;
 
     public ProductsPresenter(Activity activity, LifecycleOwner lifecycleOwner) {
@@ -55,7 +55,7 @@ public class ProductsPresenter extends BasePresenter<ProductUIView> {
         getMvpView().updateProduct(listProducts);
     }
 
-    public void updateData(){
+    public void updateData() {
         List<Products> listProducts = appDB.products().getAll();
         getMvpView().updateProduct(listProducts);
     }

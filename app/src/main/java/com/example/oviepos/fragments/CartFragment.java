@@ -35,7 +35,7 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
     @BindView(R.id.txtSubTotal)
     AppCompatTextView txtSubTotal;
 
-    public static CartFragment getInstance(){
+    public static CartFragment getInstance() {
         return new CartFragment();
     }
 
@@ -50,7 +50,7 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
         return view;
     }
 
-    void init(){
+    void init() {
         ButterKnife.bind(this, view);
         cartPresenter = new CartPresenter(getActivity(), this);
         cartPresenter.attachView(this);
@@ -60,7 +60,7 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
 
     @Override
     public void showAllCart(List<Cart> listCarts) {
-        if (listCarts != null){
+        if (listCarts != null) {
             cartAdapter = new CartAdapter(getActivity().getApplicationContext(), listCarts, this);
             linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
 
@@ -71,9 +71,9 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
 
     @Override
     public void updateData(List<Cart> listCart) {
-        if (listCart != null){
+        if (listCart != null) {
             int total = 0;
-            for (Cart cart : listCart){
+            for (Cart cart : listCart) {
                 total += cart.getQty() * Integer.parseInt(cart.getProductPrice());
             }
             txtSubTotal.setText(String.valueOf(total));

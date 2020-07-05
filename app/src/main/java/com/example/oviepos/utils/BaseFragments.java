@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment;
 import com.example.oviepos.R;
 
 public class BaseFragments extends Fragment {
-    public Activity getActivityInstance(Context context){
+    public Activity getActivityInstance(Context context) {
         Activity a = null;
-        if (context instanceof Activity){
-            a=(Activity) context;
+        if (context instanceof Activity) {
+            a = (Activity) context;
         }
         return a;
     }

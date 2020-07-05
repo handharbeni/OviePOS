@@ -5,7 +5,8 @@ import android.os.StrictMode;
 public class StrictModeManager {
     private static boolean enabled = false;
 
-    private StrictModeManager() {}
+    private StrictModeManager() {
+    }
 
     public static void enableStrictMode() {
         enabled = true;
