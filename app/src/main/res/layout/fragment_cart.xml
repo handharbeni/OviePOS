@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingBottom="?actionBarSize"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvCustomer"
+        android:elevation="10dp"
+        android:layout_margin="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:maxHeight="90dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+        <LinearLayout
+            android:layout_margin="15dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customer" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:hint="Test"
+                android:id="@+id/txtCustomer"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:paddingTop="95dp"
+        android:paddingBottom="105dp"
+        android:id="@+id/listCart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvCustomer"
+        app:layout_constraintBottom_toTopOf="@id/cvSubTotal"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvSubTotal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="2dp"
+        android:layout_marginBottom="4dp"
+        android:elevation="10dp"
+        android:maxHeight="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sub Total" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtSubTotal"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rp. 50.000" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
