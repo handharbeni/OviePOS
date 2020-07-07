@@ -4,23 +4,39 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import com.example.oviepos.databases.models.responses.Products;
+import com.example.oviepos.databases.models.responses.TransactionItems;
 import com.example.oviepos.databases.models.responses.Transactions;
+import com.example.oviepos.databases.models.responses.TransactionsAndItems;
 
 import java.util.List;
 
 @Dao
-public interface InterfaceTransactions {
+public abstract class InterfaceTransactions {
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    void insertAll(List<Transactions> transactionsList);
+    public abstract long insert(Transactions transactions);
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    void insert(Transactions transactions);
+    @Insert
+    public abstract long insertItem(TransactionItems transactionItems);
 
     @Query("SELECT * FROM Transactions")
-    List<Products> getAll();
+    public abstract List<Products> getAll();
 
     @Query("SELECT * FROM Transactions WHERE id = :id")
-    List<Products> getById(int id);
+    public abstract List<Products> getById(int id);
+
+    @Transaction
+//    @Insert(onConflict = OnConflictStrategy.ABORT)
+    public void insertTransaction(Transactions transactions, List<TransactionItems> transactionItems){
+        final long transactionId = insert(transactions);
+        for (TransactionItems transactionItems1 : transactionItems){
+            transactionItems1.setTransactionId(transactionId);
+            insertItem(transactionItems1);
+        }
+    }
+
+    @Query("SELECT * FROM Transactions")
+    public abstract List<TransactionsAndItems> listTransactions();
 }

@@ -1,6 +1,8 @@
 package com.example.oviepos.views;
 
 import com.example.oviepos.databases.models.responses.Cart;
+import com.example.oviepos.databases.models.responses.TransactionItems;
+import com.example.oviepos.databases.models.responses.Transactions;
 import com.example.oviepos.utils.Constants;
 import com.manishkprboilerplate.base.UiView;
 
@@ -9,7 +11,7 @@ import java.util.List;
 public interface PaymentUIView {
     interface paymentPresenter{
         void init();
-        void doPayment();
+        void doPayment(Transactions transactions, List<TransactionItems> transactionItems);
     }
     interface paymentUIView extends UiView{
         void initOrderType(List<Constants.TRANSACTION_TYPE> orderType);

@@ -13,6 +13,9 @@ public class ProductsCategory implements Serializable {
     Integer id;
     String categoryName;
 
+    public ProductsCategory() {
+    }
+
     public Integer getId() {
         return id;
     }

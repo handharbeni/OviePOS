@@ -13,7 +13,7 @@ public class DataConverter {
     private static Gson gson = new Gson();
 
     @TypeConverter
-    public static List<Object> stringToSomeObjectList(String data) {
+    public static List<Object> toList(String data) {
         if (data == null) {
             return Collections.emptyList();
         }
@@ -25,7 +25,7 @@ public class DataConverter {
     }
 
     @TypeConverter
-    public static String someObjectListToString(List<Object> someObjects) {
+    public static String toString(List<Object> someObjects) {
         return gson.toJson(someObjects);
     }
 }

@@ -6,6 +6,8 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.example.oviepos.databases.AppDB;
 import com.example.oviepos.databases.models.responses.Cart;
+import com.example.oviepos.databases.models.responses.TransactionItems;
+import com.example.oviepos.databases.models.responses.Transactions;
 import com.example.oviepos.utils.Constants;
 import com.example.oviepos.views.PaymentUIView;
 import com.manishkprboilerplate.base.BasePresenter;
@@ -57,7 +59,8 @@ public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
     }
 
     @Override
-    public void doPayment() {
+    public void doPayment(Transactions transactions, List<TransactionItems> transactionItems) {
+        appDB.transactions().insertTransaction(transactions, transactionItems);
         getMvpView().onPaymentSuccess();
     }
 }

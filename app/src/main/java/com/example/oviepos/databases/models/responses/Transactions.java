@@ -1,10 +1,17 @@
 package com.example.oviepos.databases.models.responses;
 
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
+import androidx.room.TypeConverters;
+
+import com.example.oviepos.databases.helpers.DataConverter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity(indices = {@Index(value = {"id"}, unique = true)})
 public class Transactions implements Serializable {
@@ -21,6 +28,20 @@ public class Transactions implements Serializable {
     private Long dateNow;
 
     public Transactions() {
+    }
+
+    @Ignore
+    public Transactions(Integer id, String productId, String customerName, String transactionsType, String paymentType, String productPrice, String productName, Long timeIn, Long timeOut, Long dateNow) {
+        this.id = id;
+        this.productId = productId;
+        this.customerName = customerName;
+        this.transactionsType = transactionsType;
+        this.paymentType = paymentType;
+        this.productPrice = productPrice;
+        this.productName = productName;
+        this.timeIn = timeIn;
+        this.timeOut = timeOut;
+        this.dateNow = dateNow;
     }
 
     public Integer getId() {

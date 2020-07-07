@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.oviepos.R;
 import com.example.oviepos.adapters.CartAdapter;
 import com.example.oviepos.databases.models.responses.Cart;
+import com.example.oviepos.databases.models.responses.TransactionItems;
+import com.example.oviepos.databases.models.responses.Transactions;
 import com.example.oviepos.presenters.PaymentPresenter;
 import com.example.oviepos.utils.BaseBottomFragments;
 import com.example.oviepos.utils.Constants;
@@ -26,10 +28,12 @@ import com.example.oviepos.utils.Utils;
 import com.example.oviepos.views.PaymentUIView;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import butterknife.OnTextChanged;
 
@@ -80,6 +84,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
     AppCompatButton btnPay;
 
     private View view;
+    private List<Cart> listCarts = new ArrayList<>();
 
     public static PaymentBottomsheet getInstance(Context context, String customerName){
         return new PaymentBottomsheet(context, customerName);
@@ -150,6 +155,28 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
         paymentComeback.setText(Utils.formatRupiah(kembalian));
     }
 
+    @OnClick(R.id.btnPay)
+    public void onPayClick(){
+        List<TransactionItems> listItem = new ArrayList<>();
+        for (Cart cart : listCarts){
+            TransactionItems items = new TransactionItems();
+            items.setProductId(cart.getProductId());
+            items.setProductName(cart.getProductName());
+            items.setProductPrice(cart.getProductPrice());
+            items.setQty(cart.getQty());
+            listItem.add(items);
+        }
+        Transactions transactions = new Transactions();
+        transactions.setPaymentType(paymentType.getSelectedItem().toString());
+        transactions.setTransactionsType(transactionType.getSelectedItem().toString());
+        transactions.setCustomerName("");
+        transactions.setDateNow(System.currentTimeMillis());
+        transactions.setTimeIn(System.currentTimeMillis());
+        transactions.setTimeOut(System.currentTimeMillis());
+
+        paymentPresenter.doPayment(transactions, listItem);
+    }
+
     @Override
     public void initPaymentCashless(List<Constants.PAYMENT_CASHLESS> paymentCashsless) {
         ArrayAdapter adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
@@ -161,6 +188,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
 
     @Override
     public void initListCart(List<Cart> listCarts) {
+        this.listCarts = listCarts;
         cartAdapter = new CartAdapter(getActivity().getApplicationContext(),
                 listCarts,
                 this,

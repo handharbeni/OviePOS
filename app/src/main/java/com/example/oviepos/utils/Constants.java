@@ -3,7 +3,7 @@ package com.example.oviepos.utils;
 import android.Manifest;
 
 public class Constants {
-    public static final int versionDb = 2;
+    public static final int versionDb = 3;
     public static final boolean exportSchema = false;
     public static final String nameDb = "ovie-pos";
 

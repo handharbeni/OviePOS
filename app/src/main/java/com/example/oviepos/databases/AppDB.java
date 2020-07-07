@@ -17,6 +17,7 @@ import com.example.oviepos.databases.interfaces.InterfaceTransactions;
 import com.example.oviepos.databases.models.responses.Cart;
 import com.example.oviepos.databases.models.responses.Products;
 import com.example.oviepos.databases.models.responses.ProductsCategory;
+import com.example.oviepos.databases.models.responses.TransactionItems;
 import com.example.oviepos.databases.models.responses.Transactions;
 import com.example.oviepos.utils.Constants;
 
@@ -26,7 +27,8 @@ import com.example.oviepos.utils.Constants;
                 ProductsCategory.class,
                 Products.class,
                 Transactions.class,
-                Cart.class
+                Cart.class,
+                TransactionItems.class
         },
         version = Constants.versionDb,
         exportSchema = Constants.exportSchema

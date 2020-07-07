@@ -4,6 +4,8 @@ import android.app.Application;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.facebook.stetho.Stetho;
+
 import org.jetbrains.annotations.Contract;
 
 public class CoreApplication extends MultiDexApplication {
@@ -14,6 +16,7 @@ public class CoreApplication extends MultiDexApplication {
         super.onCreate();
         instances = this;
         StrictModeManager.enableStrictMode();
+        Stetho.initializeWithDefaults(this);
     }
 
     @Contract(pure = true)
