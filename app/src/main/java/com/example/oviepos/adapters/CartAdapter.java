@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oviepos.R;
 import com.example.oviepos.databases.models.responses.Cart;
+import com.example.oviepos.utils.Utils;
 
 import java.util.List;
 
@@ -24,11 +25,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private Context context;
     private List<Cart> listCart;
     private CartAdapterInterface cartAdapterInterface;
+    private boolean isPayment = false;
 
-    public CartAdapter(Context context, List<Cart> listCart, CartAdapterInterface cartAdapterInterface) {
+    public CartAdapter(Context context, List<Cart> listCart, CartAdapterInterface cartAdapterInterface, boolean isPayment) {
         this.context = context;
         this.listCart = listCart;
         this.cartAdapterInterface = cartAdapterInterface;
+        this.isPayment = isPayment;
     }
 
     @NonNull
@@ -68,11 +71,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            if (isPayment){
+                btnAddQty.setVisibility(View.GONE);
+                btnRemoveQty.setVisibility(View.GONE);
+            }
         }
 
         public void bindData(Cart cart) {
             txtProductName.setText(cart.getProductName());
-            txtProductPrice.setText(cart.getProductPrice());
+            txtProductPrice.setText(Utils.formatRupiah(Integer.parseInt(cart.getProductPrice())));
             txtQty.setText(String.valueOf(cart.getQty()));
         }
     }

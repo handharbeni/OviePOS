@@ -13,10 +13,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.oviepos.R;
+import com.example.oviepos.fragments.bottomsheets.PaymentBottomsheet;
 import com.example.oviepos.utils.BaseFragments;
+import com.google.android.material.button.MaterialButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OrderFragment extends BaseFragments {
     private View view;
@@ -25,6 +28,8 @@ public class OrderFragment extends BaseFragments {
     FrameLayout frameProduct;
     @BindView(R.id.frameCart)
     FrameLayout frameCart;
+    @BindView(R.id.btnNextPayment)
+    MaterialButton btnNextPayment;
 
     public static OrderFragment getInstance() {
         return new OrderFragment();
@@ -52,6 +57,15 @@ public class OrderFragment extends BaseFragments {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(frame, fragment);
         fragmentTransaction.commit();
+    }
+
+    @OnClick(R.id.btnNextPayment)
+    public void nextToPayment(){
+        PaymentBottomsheet paymentBottomsheet = PaymentBottomsheet.getInstance(
+                getActivity().getApplicationContext(),
+                ""
+                );
+        paymentBottomsheet.showNow(getChildFragmentManager(), paymentBottomsheet.getTag());
     }
 
 }

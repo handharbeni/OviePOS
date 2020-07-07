@@ -1,6 +1,8 @@
 package com.example.oviepos.utils;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Utils {
     public static String getTimeFromMillis(long millis) {
@@ -35,5 +37,10 @@ public class Utils {
                 String.valueOf(mDay));
 
         return String.format("%s/%s/%s", sDay, sMonth, sYear);
+    }
+
+    public static String formatRupiah(long rupiah){
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+        return numberFormat.format(rupiah);
     }
 }

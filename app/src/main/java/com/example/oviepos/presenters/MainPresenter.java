@@ -123,7 +123,7 @@ public class MainPresenter extends BasePresenter<MainUIView> {
     }
 
     public void doLogin(TextInputLayout txtUsername, TextInputLayout txtPassword) {
-        if (isValidated(txtUsername) || isValidated(txtPassword)) {
+        if (!isValidated(txtUsername) || !isValidated(txtPassword)) {
             return;
         }
         AppPreferences.getInstance(activity.getApplicationContext())

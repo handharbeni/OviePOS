@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingBottom="?actionBarSize"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
@@ -39,7 +38,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:paddingTop="95dp"
-        android:paddingBottom="105dp"
+        android:paddingBottom="75dp"
         android:id="@+id/listCart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,11 +50,11 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvSubTotal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:layout_margin="2dp"
         android:layout_marginBottom="4dp"
         android:elevation="10dp"
-        android:maxHeight="100dp"
+        android:maxHeight="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -74,10 +73,10 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtSubTotal"
-                style="@style/TextAppearance.MaterialComponents.Headline4"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rp. 50.000" />
+                android:text="Rp. 0" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

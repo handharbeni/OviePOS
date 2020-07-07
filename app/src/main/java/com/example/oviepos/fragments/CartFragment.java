@@ -16,6 +16,7 @@ import com.example.oviepos.adapters.CartAdapter;
 import com.example.oviepos.databases.models.responses.Cart;
 import com.example.oviepos.presenters.CartPresenter;
 import com.example.oviepos.utils.BaseFragments;
+import com.example.oviepos.utils.Utils;
 import com.example.oviepos.views.CartUIView;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
     @Override
     public void showAllCart(List<Cart> listCarts) {
         if (listCarts != null) {
-            cartAdapter = new CartAdapter(getActivity().getApplicationContext(), listCarts, this);
+            cartAdapter = new CartAdapter(getActivity().getApplicationContext(), listCarts, this, false);
             linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
 
             listCart.setLayoutManager(linearLayoutManager);
@@ -76,7 +77,7 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
             for (Cart cart : listCart) {
                 total += cart.getQty() * Integer.parseInt(cart.getProductPrice());
             }
-            txtSubTotal.setText(String.valueOf(total));
+            txtSubTotal.setText(Utils.formatRupiah(total));
             cartAdapter.update(listCart);
         }
     }
