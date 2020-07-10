@@ -149,6 +149,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
         registerLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
 
+        txtTitle.setText(R.string.label_cart);
         fillFragment(OrderFragment.getInstance());
     }
 

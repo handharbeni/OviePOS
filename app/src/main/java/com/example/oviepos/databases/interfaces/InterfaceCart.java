@@ -22,6 +22,9 @@ public interface InterfaceCart {
     @Delete
     void delete(Cart cart);
 
+    @Delete
+    void delete(List<Cart> carts);
+
     @Query("SELECT * FROM Cart WHERE productId = :productId")
     Cart getCartByProductId(int productId);
 

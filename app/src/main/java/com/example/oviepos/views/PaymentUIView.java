@@ -9,16 +9,23 @@ import com.manishkprboilerplate.base.UiView;
 import java.util.List;
 
 public interface PaymentUIView {
-    interface paymentPresenter{
+    interface paymentPresenter {
         void init();
+
         void doPayment(Transactions transactions, List<TransactionItems> transactionItems);
     }
-    interface paymentUIView extends UiView{
+
+    interface paymentUIView extends UiView {
         void initOrderType(List<Constants.TRANSACTION_TYPE> orderType);
+
         void initPaymentType(List<Constants.PAYMENT_TYPE> paymentType);
+
         void initPaymentCashless(List<Constants.PAYMENT_CASHLESS> paymentCashless);
+
         void initListCart(List<Cart> listCart);
+
         void onPaymentSuccess();
+
         void onPaymentFailed();
     }
 }

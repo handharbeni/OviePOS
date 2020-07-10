@@ -19,7 +19,7 @@ import java.util.List;
 import rx.Subscription;
 
 public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
-        implements PaymentUIView.paymentPresenter{
+        implements PaymentUIView.paymentPresenter {
 
     Activity activity;
     private Subscription subscription;
@@ -60,7 +60,12 @@ public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
 
     @Override
     public void doPayment(Transactions transactions, List<TransactionItems> transactionItems) {
-        appDB.transactions().insertTransaction(transactions, transactionItems);
-        getMvpView().onPaymentSuccess();
+        try {
+            appDB.transactions().insertTransaction(transactions, transactionItems);
+            appDB.cart().delete(appDB.cart().getAll());
+            getMvpView().onPaymentSuccess();
+        } catch (Exception e) {
+            getMvpView().onPaymentFailed();
+        }
     }
 }

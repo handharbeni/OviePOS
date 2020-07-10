@@ -86,7 +86,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
     private View view;
     private List<Cart> listCarts = new ArrayList<>();
 
-    public static PaymentBottomsheet getInstance(Context context, String customerName){
+    public static PaymentBottomsheet getInstance(Context context, String customerName) {
         return new PaymentBottomsheet(context, customerName);
     }
 
@@ -103,7 +103,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
         return view;
     }
 
-    void init(){
+    void init() {
         ButterKnife.bind(this, view);
         paymentPresenter = new PaymentPresenter(getActivity(), this);
         paymentPresenter.attachView(this);
@@ -130,35 +130,35 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
     }
 
     @OnItemSelected(R.id.paymentType)
-    public void onPaymentTypeSelected(AppCompatSpinner spinner, int position){
-        switch (position){
-            case  0 :
+    public void onPaymentTypeSelected(AppCompatSpinner spinner, int position) {
+        switch (position) {
+            case 0:
                 panelPaymentCashless.setVisibility(View.GONE);
                 break;
-            case 1 :
+            case 1:
                 panelPaymentCashless.setVisibility(View.VISIBLE);
                 break;
         }
     }
 
     @OnTextChanged(value = R.id.paymentInput, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onInputChange(CharSequence charSequence){
+    public void onInputChange(CharSequence charSequence) {
         int kembalian = 0;
         try {
             String input = charSequence.toString();
             int priceInput = Integer.parseInt(input);
 
             kembalian = priceInput - total;
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             kembalian = 0;
         }
         paymentComeback.setText(Utils.formatRupiah(kembalian));
     }
 
     @OnClick(R.id.btnPay)
-    public void onPayClick(){
+    public void onPayClick() {
         List<TransactionItems> listItem = new ArrayList<>();
-        for (Cart cart : listCarts){
+        for (Cart cart : listCarts) {
             TransactionItems items = new TransactionItems();
             items.setProductId(cart.getProductId());
             items.setProductName(cart.getProductName());
@@ -198,7 +198,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
         listCart.setAdapter(cartAdapter);
 
 //        int total = 0;
-        for (Cart cart : listCarts){
+        for (Cart cart : listCarts) {
             total += (cart.getQty() * Integer.parseInt(cart.getProductPrice()));
         }
         paymentTotal.setText(Utils.formatRupiah(total));
@@ -206,7 +206,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
 
     @Override
     public void onPaymentSuccess() {
-
+        dismiss();
     }
 
     @Override
