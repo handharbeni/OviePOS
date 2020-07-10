@@ -9,4 +9,8 @@ public interface CartUIView extends UiView {
     void showAllCart(List<Cart> listCart);
 
     void updateData(List<Cart> listCart);
+
+    interface CartCallback{
+        void onCustomerNameChange(String text);
+    }
 }

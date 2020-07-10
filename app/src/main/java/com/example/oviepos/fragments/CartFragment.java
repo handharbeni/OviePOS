@@ -1,5 +1,6 @@
 package com.example.oviepos.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 
 public class CartFragment extends BaseFragments implements CartUIView, CartAdapter.CartAdapterInterface {
     private View view;
@@ -30,17 +33,26 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
     private CartAdapter cartAdapter;
     private LinearLayoutManager linearLayoutManager;
 
+    CartCallback cartCallback;
+
 
     @BindView(R.id.listCart)
     RecyclerView listCart;
     @BindView(R.id.txtSubTotal)
     AppCompatTextView txtSubTotal;
 
-    public static CartFragment getInstance() {
-        return new CartFragment();
+    @BindView(R.id.txtCustomer)
+    AppCompatEditText txtCustomer;
+
+    String customerName = "";
+
+    public static CartFragment getInstance(String customerName, CartCallback cartCallback) {
+        return new CartFragment(customerName, cartCallback);
     }
 
-    public CartFragment() {
+    public CartFragment(String customerName, CartCallback cartCallback) {
+        this.customerName = customerName;
+        this.cartCallback = cartCallback;
     }
 
     @Nullable
@@ -57,6 +69,13 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
         cartPresenter.attachView(this);
 
         cartPresenter.init();
+
+        txtCustomer.setText(customerName);
+    }
+
+    @OnTextChanged(value = R.id.txtCustomer, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void nameChanged(CharSequence charSequence){
+        cartCallback.onCustomerNameChange(charSequence.toString());
     }
 
     @Override

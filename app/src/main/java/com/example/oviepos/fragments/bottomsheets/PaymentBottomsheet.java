@@ -169,7 +169,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
         Transactions transactions = new Transactions();
         transactions.setPaymentType(paymentType.getSelectedItem().toString());
         transactions.setTransactionsType(transactionType.getSelectedItem().toString());
-        transactions.setCustomerName("");
+        transactions.setCustomerName(customerName);
         transactions.setDateNow(System.currentTimeMillis());
         transactions.setTimeIn(System.currentTimeMillis());
         transactions.setTimeOut(System.currentTimeMillis());
@@ -197,7 +197,6 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
         listCart.setLayoutManager(linearLayoutManager);
         listCart.setAdapter(cartAdapter);
 
-//        int total = 0;
         for (Cart cart : listCarts) {
             total += (cart.getQty() * Integer.parseInt(cart.getProductPrice()));
         }

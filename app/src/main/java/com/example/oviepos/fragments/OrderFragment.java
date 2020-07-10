@@ -15,13 +15,14 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.oviepos.R;
 import com.example.oviepos.fragments.bottomsheets.PaymentBottomsheet;
 import com.example.oviepos.utils.BaseFragments;
+import com.example.oviepos.views.CartUIView;
 import com.google.android.material.button.MaterialButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderFragment extends BaseFragments {
+public class OrderFragment extends BaseFragments implements CartUIView.CartCallback {
     private View view;
 
     @BindView(R.id.frameProduct)
@@ -30,6 +31,8 @@ public class OrderFragment extends BaseFragments {
     FrameLayout frameCart;
     @BindView(R.id.btnNextPayment)
     MaterialButton btnNextPayment;
+
+    String customerName = String.valueOf(System.currentTimeMillis());
 
     public static OrderFragment getInstance() {
         return new OrderFragment();
@@ -49,7 +52,7 @@ public class OrderFragment extends BaseFragments {
     void init() {
         ButterKnife.bind(this, view);
         fillFragment(R.id.frameProduct, ProductFragment.getInstance(true));
-        fillFragment(R.id.frameCart, CartFragment.getInstance());
+        fillFragment(R.id.frameCart, CartFragment.getInstance(customerName, this));
     }
 
     private void fillFragment(int frame, Fragment fragment) {
@@ -63,9 +66,13 @@ public class OrderFragment extends BaseFragments {
     public void nextToPayment(){
         PaymentBottomsheet paymentBottomsheet = PaymentBottomsheet.getInstance(
                 getActivity().getApplicationContext(),
-                ""
+                this.customerName
                 );
         paymentBottomsheet.showNow(getChildFragmentManager(), paymentBottomsheet.getTag());
     }
 
+    @Override
+    public void onCustomerNameChange(String text) {
+        this.customerName = text;
+    }
 }
