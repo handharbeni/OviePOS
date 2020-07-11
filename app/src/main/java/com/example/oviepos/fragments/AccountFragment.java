@@ -37,8 +37,8 @@ public class AccountFragment extends BaseFragments implements AccountUIView {
     private AccountPresenter accountPresenter;
     private View view;
 
-    private static String PAIRED_DEVICE = "DISCONNECT PRINTER";
-    private static String UNPAIRED_DEVICE = "CONNECT PRINTER";
+    public static String PAIRED_DEVICE = "DISCONNECT PRINTER";
+    public static String UNPAIRED_DEVICE = "CONNECT PRINTER";
 
     @BindView(R.id.txtUsername)
     TextView txtUsername;
@@ -69,6 +69,10 @@ public class AccountFragment extends BaseFragments implements AccountUIView {
 
         accountPresenter.init();
         btnPairUnpair.setText(isPrinterReady?PAIRED_DEVICE:UNPAIRED_DEVICE);
+    }
+
+    public void updateButton(String text){
+        btnPairUnpair.setText(text);
     }
 
 

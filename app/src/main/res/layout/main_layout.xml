@@ -12,15 +12,30 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:id="@+id/txtTitle"
-            android:textColor="@android:color/white"
-            android:padding="7dp"
-            android:textAlignment="center"
-            android:text="TITLE"
+        <LinearLayout
+            android:weightSum="1"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_weight="0.9"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:id="@+id/txtTitle"
+                android:textColor="@android:color/white"
+                android:padding="7dp"
+                android:textAlignment="center"
+                android:text="TITLE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/iconThermalPrinter"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:src="@drawable/ic_print_disconnected"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+        </LinearLayout>
         <com.google.android.material.card.MaterialCardView
             android:elevation="50dp"
             android:paddingBottom="?actionBarSize"

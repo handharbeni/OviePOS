@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -18,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.oviepos.callbacks.AccountCallback;
 import com.example.oviepos.fragments.AccountFragment;
+import com.example.oviepos.fragments.CartFragment;
 import com.example.oviepos.fragments.CategoryFragment;
 import com.example.oviepos.fragments.OrderFragment;
 import com.example.oviepos.fragments.ProductFragment;
@@ -79,6 +81,8 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     FrameLayout content;
     @BindView(R.id.txtTitle)
     AppCompatTextView txtTitle;
+    @BindView(R.id.iconThermalPrinter)
+    ImageView iconThermalPrinter;
 
     MainPresenter mainPresenter;
 
@@ -89,6 +93,14 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     public static BluetoothService mService = null;
     public static boolean isPrinterReady = false;
+
+
+    private AccountFragment accountFragment;
+    private CartFragment cartFragment;
+    private CategoryFragment categoryFragment;
+    private OrderFragment orderFragment;
+    private ProductFragment productFragment;
+    private ReportFragment reportFragment;
 
 
     @Override
@@ -180,32 +192,36 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     @Override
     public void fragmentCategory() {
         txtTitle.setText(R.string.label_category);
-        fillFragment(CategoryFragment.getInstance());
+        categoryFragment = CategoryFragment.getInstance();
+        fillFragment(categoryFragment);
     }
 
     @Override
     public void fragmentProduct() {
         txtTitle.setText(R.string.label_product);
-        fillFragment(ProductFragment.getInstance(false));
+        productFragment = ProductFragment.getInstance(false);
+        fillFragment(productFragment);
     }
 
     @Override
     public void fragmentReport() {
         txtTitle.setText(R.string.label_report);
-        fillFragment(ReportFragment.getInstance());
+        reportFragment = ReportFragment.getInstance();
+        fillFragment(reportFragment);
     }
 
     @Override
     public void fragmentAccount() {
         txtTitle.setText(R.string.label_account);
-        fillFragment(AccountFragment.getInstance());
-
+        accountFragment = AccountFragment.getInstance();
+        fillFragment(accountFragment);
     }
 
     @Override
     public void fragmentCart() {
         txtTitle.setText(R.string.label_cart);
-        fillFragment(OrderFragment.getInstance());
+        orderFragment = OrderFragment.getInstance();
+        fillFragment(orderFragment);
     }
 
     @Override
@@ -247,23 +263,29 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     @Override
     public void onDeviceConnected() {
         isPrinterReady = true;
-//        tvStatus.setText("Terhubung dengan perangkat");
+        iconThermalPrinter.setImageResource(R.drawable.ic_print_connected);
+        accountFragment.updateButton(AccountFragment.PAIRED_DEVICE);
     }
 
     @Override
     public void onDeviceConnecting() {
-//        tvStatus.setText("Sedang menghubungkan...");
+        isPrinterReady = false;
+        iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
+        accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
     }
 
     @Override
     public void onDeviceConnectionLost() {
         isPrinterReady = false;
-//        tvStatus.setText("Koneksi perangkat terputus");
+        iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
+        accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
     }
 
     @Override
     public void onDeviceUnableToConnect() {
-//        tvStatus.setText("Tidak dapat terhubung ke perangkat");
+        isPrinterReady = false;
+        iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
+        accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
     }
 
     void requestBluetooth() {
