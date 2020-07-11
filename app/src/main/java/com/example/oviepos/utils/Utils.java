@@ -43,4 +43,18 @@ public class Utils {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
         return numberFormat.format(rupiah);
     }
+
+    public static String justifyPrintLine(String sLeft, String sRight){
+        int iLeft = sLeft.length();
+        int iRight = sRight.length();
+        int iTotal = iLeft + iRight;
+        int iWhiteSpace = 30 - iTotal;
+        StringBuilder whiteSpace = new StringBuilder(" ");
+        if (iTotal >= 0){
+            for (int i = 0; i < iWhiteSpace; i++) {
+                whiteSpace.append(" ");
+            }
+        }
+        return sLeft+whiteSpace+sRight;
+    }
 }

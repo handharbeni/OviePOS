@@ -1,6 +1,11 @@
 package com.example.oviepos;
 
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -18,18 +23,24 @@ import com.example.oviepos.fragments.CategoryFragment;
 import com.example.oviepos.fragments.OrderFragment;
 import com.example.oviepos.fragments.ProductFragment;
 import com.example.oviepos.presenters.MainPresenter;
+import com.example.oviepos.print_helper.BluetoothHandler;
+import com.example.oviepos.print_helper.DeviceActivity;
+import com.example.oviepos.print_helper.PrinterCommands;
 import com.example.oviepos.utils.BaseActivity;
 import com.example.oviepos.views.MainUIView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.zj.btsdk.BluetoothService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements MainUIView, AccountCallback {
+public class MainActivity extends BaseActivity implements MainUIView, AccountCallback, BluetoothHandler.HandlerInterface {
+    private static String TAG = MainActivity.class.getSimpleName();
+
     @BindView(R.id.splashLayout)
     ConstraintLayout splashLayout;
     @BindView(R.id.loginLayout)
@@ -72,6 +83,15 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     MainPresenter mainPresenter;
 
+
+    public static final int RC_BLUETOOTH = 0;
+    public static final int RC_CONNECT_DEVICE = 1;
+    public static final int RC_ENABLE_BLUETOOTH = 2;
+
+    public static BluetoothService mService = null;
+    public static boolean isPrinterReady = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +106,11 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
         mainPresenter.attachView(this);
 
         mainPresenter.init();
+        setupBluetooth();
+    }
+
+    private void setupBluetooth() {
+        mService = new BluetoothService(this, new BluetoothHandler(this));
     }
 
     @OnClick({
@@ -218,5 +243,57 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     @Override
     public void logoutSuccess() {
         mainPresenter.decisionScreen();
+    }
+
+    @Override
+    public void onDeviceConnected() {
+        isPrinterReady = true;
+//        tvStatus.setText("Terhubung dengan perangkat");
+    }
+
+    @Override
+    public void onDeviceConnecting() {
+//        tvStatus.setText("Sedang menghubungkan...");
+    }
+
+    @Override
+    public void onDeviceConnectionLost() {
+        isPrinterReady = false;
+//        tvStatus.setText("Koneksi perangkat terputus");
+    }
+
+    @Override
+    public void onDeviceUnableToConnect() {
+//        tvStatus.setText("Tidak dapat terhubung ke perangkat");
+    }
+
+    void requestBluetooth() {
+        if (mService != null) {
+            if (!mService.isBTopen()) {
+                Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(intent, RC_ENABLE_BLUETOOTH);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case RC_ENABLE_BLUETOOTH:
+                if (resultCode == RESULT_OK) {
+                    Log.i(TAG, "onActivityResult: bluetooth aktif");
+                } else
+                    Log.i(TAG, "onActivityResult: bluetooth harus aktif untuk menggunakan fitur ini");
+                requestBluetooth();
+                break;
+            case RC_CONNECT_DEVICE:
+                if (resultCode == RESULT_OK) {
+                    String address = data.getExtras().getString(DeviceActivity.EXTRA_DEVICE_ADDRESS);
+                    BluetoothDevice mDevice = mService.getDevByMac(address);
+                    mService.connect(mDevice);
+                }
+                break;
+        }
     }
 }

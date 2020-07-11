@@ -4,11 +4,15 @@ import android.app.Activity;
 
 import androidx.lifecycle.LifecycleOwner;
 
+import com.example.oviepos.MainActivity;
+import com.example.oviepos.R;
 import com.example.oviepos.databases.AppDB;
 import com.example.oviepos.databases.models.responses.Cart;
 import com.example.oviepos.databases.models.responses.TransactionItems;
 import com.example.oviepos.databases.models.responses.Transactions;
+import com.example.oviepos.print_helper.PrinterCommands;
 import com.example.oviepos.utils.Constants;
+import com.example.oviepos.utils.Utils;
 import com.example.oviepos.views.PaymentUIView;
 import com.manishkprboilerplate.base.BasePresenter;
 
@@ -17,6 +21,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import rx.Subscription;
+
+import static com.example.oviepos.MainActivity.isPrinterReady;
+import static com.example.oviepos.MainActivity.mService;
 
 public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
         implements PaymentUIView.paymentPresenter {
@@ -62,6 +69,26 @@ public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
     public void doPayment(Transactions transactions, List<TransactionItems> transactionItems) {
         try {
             appDB.transactions().insertTransaction(transactions, transactionItems);
+            if (isPrinterReady){
+                mService.write(PrinterCommands.ESC_ALIGN_CENTER);
+                mService.sendMessage(activity.getApplicationContext().getString(R.string.app_name), "");
+                mService.write(PrinterCommands.ESC_ALIGN_LEFT);
+                mService.sendMessage("Customer : "+transactions.getCustomerName(), "");
+                mService.sendMessage("Date : "+transactions.getDateNow(), "");
+                mService.sendMessage(PrinterCommands.dashLine, "");
+                int total = 0;
+                for (TransactionItems items : transactionItems){
+                    mService.sendMessage(items.getProductName()+" ("+Utils.formatRupiah(Integer.parseInt(items.getProductPrice()))+")", "");
+                    int subTotal = Integer.parseInt(items.getProductPrice()) * items.getQty();
+                    total += subTotal;
+                    mService.sendMessage(Utils.justifyPrintLine("x "+items.getQty(), Utils.formatRupiah(subTotal)), "");
+                }
+                mService.sendMessage(PrinterCommands.dashLine, "");
+                mService.sendMessage(Utils.justifyPrintLine("TOTAL", Utils.formatRupiah(total)), "");
+                mService.write(PrinterCommands.ESC_ALIGN_CENTER);
+                mService.sendMessage("TERIMA KASIH", "");
+                mService.write(PrinterCommands.ESC_ENTER);
+            }
             appDB.cart().delete(appDB.cart().getAll());
             getMvpView().onPaymentSuccess();
         } catch (Exception e) {
