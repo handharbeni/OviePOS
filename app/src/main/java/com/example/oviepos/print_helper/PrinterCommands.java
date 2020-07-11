@@ -1,9 +1,5 @@
 package com.example.oviepos.print_helper;
 
-/**
- * Created by ilham on 9/17/17.
- */
-
 public class PrinterCommands {
 
     public static final byte HT = 0x9;
