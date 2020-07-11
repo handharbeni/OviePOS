@@ -1,6 +1,5 @@
 package com.example.oviepos;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -22,10 +21,10 @@ import com.example.oviepos.fragments.AccountFragment;
 import com.example.oviepos.fragments.CategoryFragment;
 import com.example.oviepos.fragments.OrderFragment;
 import com.example.oviepos.fragments.ProductFragment;
+import com.example.oviepos.fragments.ReportFragment;
 import com.example.oviepos.presenters.MainPresenter;
 import com.example.oviepos.print_helper.BluetoothHandler;
 import com.example.oviepos.print_helper.DeviceActivity;
-import com.example.oviepos.print_helper.PrinterCommands;
 import com.example.oviepos.utils.BaseActivity;
 import com.example.oviepos.views.MainUIView;
 import com.google.android.material.button.MaterialButton;
@@ -193,7 +192,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     @Override
     public void fragmentReport() {
         txtTitle.setText(R.string.label_report);
-//        fillFragment(ReportFragment.getInstance());
+        fillFragment(ReportFragment.getInstance());
     }
 
     @Override

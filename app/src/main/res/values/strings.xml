@@ -9,7 +9,7 @@
     <string name="kuantitas_terjual">Kuantitas Terjual :</string>
     <string name="harga_terjual">Harga Terjual :</string>
     <array name="tipe_report">
+        <item>TRANSACTION</item>
         <item>CUSTOMER</item>
-        <item>PRODUK</item>
     </array>
 </resources>

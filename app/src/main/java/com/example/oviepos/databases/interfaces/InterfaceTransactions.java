@@ -37,6 +37,12 @@ public abstract class InterfaceTransactions {
         }
     }
 
+    @Query("SELECT * FROM TransactionItems")
+    public abstract List<TransactionItems> getAllTransactionItems();
+
     @Query("SELECT * FROM Transactions")
     public abstract List<TransactionsAndItems> listTransactions();
+
+    @Query("SELECT * FROM TransactionItems WHERE productId = :productId")
+    public abstract List<TransactionItems> getItems(int productId);
 }
