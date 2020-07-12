@@ -76,15 +76,15 @@ public class ReportCustomerAdapter extends RecyclerView.Adapter<ReportCustomerAd
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(HashMap<Transactions, List<TransactionItems>> listItems){
-            for (Map.Entry<Transactions, List<TransactionItems>> hmListItems : listItems.entrySet()){
+        public void bindData(HashMap<Transactions, List<TransactionItems>> listItems) {
+            for (Map.Entry<Transactions, List<TransactionItems>> hmListItems : listItems.entrySet()) {
                 Transactions transactions = hmListItems.getKey();
                 txtCustomerName.setText(transactions.getCustomerName());
                 txtCustomerDate.setText(Utils.getDateFromMillis(transactions.getDateNow()));
                 int totalPrice = 0;
 
                 List<TransactionItems> listItem = hmListItems.getValue();
-                for (TransactionItems itm : listItem){
+                for (TransactionItems itm : listItem) {
                     totalPrice += Integer.parseInt(itm.getProductPrice()) * itm.getQty();
                 }
                 ReportCustomerItemAdapter reportCustomerItemAdapter =
@@ -98,8 +98,9 @@ public class ReportCustomerAdapter extends RecyclerView.Adapter<ReportCustomerAd
         }
     }
 
-    public interface ReportCustomerInterface{
+    public interface ReportCustomerInterface {
         void onItemViewClick(HashMap<Transactions, List<TransactionItems>> currentItem);
+
         void onPrintClick(HashMap<Transactions, List<TransactionItems>> currentItem);
     }
 }

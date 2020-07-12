@@ -61,7 +61,7 @@ public class ReportCustomerItemAdapter extends RecyclerView.Adapter<ReportCustom
             ButterKnife.bind(this, itemView);
         }
 
-        void bindData(TransactionItems transactionItems){
+        void bindData(TransactionItems transactionItems) {
             txtProductName.setText(transactionItems.getProductName());
             txtProductPrice.setText(
                     Utils.formatRupiah(

@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-    app:behavior_peekHeight="290dp"
-    android:layout_margin="5dp"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
     android:minHeight="500dp"
+    android:orientation="vertical"
     android:padding="30dp"
-    android:layout_height="match_parent">
+    app:behavior_peekHeight="290dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
     <EditText
         android:id="@+id/txtCategoryName"
-        android:hint="Category Name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="Category Name" />
+
     <Button
         android:id="@+id/btnCreate"
-        android:text="CREATE"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="CREATE" />
 
     <LinearLayout
-        android:weightSum="1"
         android:id="@+id/llBtnAction"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
         <Button
             android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="0.5"
-            android:text="UPDATE"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:text="UPDATE" />
+
         <Button
             android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="0.5"
-            android:text="DELETE"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:text="DELETE" />
     </LinearLayout>
 </LinearLayout>

@@ -70,19 +70,19 @@ public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
     public void doPayment(Transactions transactions, List<TransactionItems> transactionItems) {
         try {
             appDB.transactions().insertTransaction(transactions, transactionItems);
-            if (isPrinterReady){
+            if (isPrinterReady) {
                 mService.write(PrinterCommands.ESC_ALIGN_CENTER);
                 mService.sendMessage(activity.getApplicationContext().getString(R.string.app_name), "");
                 mService.write(PrinterCommands.ESC_ALIGN_LEFT);
-                mService.sendMessage("Customer : "+transactions.getCustomerName(), "");
-                mService.sendMessage("Date : "+ Utils.getDateFromMillis(transactions.getDateNow()), "");
+                mService.sendMessage("Customer : " + transactions.getCustomerName(), "");
+                mService.sendMessage("Date : " + Utils.getDateFromMillis(transactions.getDateNow()), "");
                 mService.sendMessage(PrinterCommands.dashLine, "");
                 int total = 0;
-                for (TransactionItems items : transactionItems){
-                    mService.sendMessage(items.getProductName()+" ("+Utils.formatRupiah(Integer.parseInt(items.getProductPrice()))+")", "");
+                for (TransactionItems items : transactionItems) {
+                    mService.sendMessage(items.getProductName() + " (" + Utils.formatRupiah(Integer.parseInt(items.getProductPrice())) + ")", "");
                     int subTotal = Integer.parseInt(items.getProductPrice()) * items.getQty();
                     total += subTotal;
-                    mService.sendMessage(Utils.justifyPrintLine("x "+items.getQty(), Utils.formatRupiah(subTotal)), "");
+                    mService.sendMessage(Utils.justifyPrintLine("x " + items.getQty(), Utils.formatRupiah(subTotal)), "");
                 }
                 mService.sendMessage(PrinterCommands.dashLine, "");
                 mService.sendMessage(Utils.justifyPrintLine("TOTAL", Utils.formatRupiah(total)), "");

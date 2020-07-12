@@ -71,7 +71,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            if (isPayment){
+            if (isPayment) {
                 btnAddQty.setVisibility(View.GONE);
                 btnRemoveQty.setVisibility(View.GONE);
             }

@@ -10,11 +10,15 @@ import java.util.List;
 public interface ReportUIView {
     interface ReportView extends UiView {
         void onGenerateReportTransactionSucess(List<HashMap<String, List<TransactionItems>>> listReportItems);
+
         void onGenerateReportCustomerSuccess(List<HashMap<Transactions, List<TransactionItems>>> listReportItems);
+
         void onGenerateReportFailed(String message);
     }
-    interface ReportPresenter{
+
+    interface ReportPresenter {
         void init();
+
         void doGenerateReport(String report);
     }
 }

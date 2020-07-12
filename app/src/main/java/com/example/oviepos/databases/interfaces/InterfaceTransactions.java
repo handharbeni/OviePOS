@@ -29,9 +29,9 @@ public abstract class InterfaceTransactions {
 
     @Transaction
 //    @Insert(onConflict = OnConflictStrategy.ABORT)
-    public void insertTransaction(Transactions transactions, List<TransactionItems> transactionItems){
+    public void insertTransaction(Transactions transactions, List<TransactionItems> transactionItems) {
         final long transactionId = insert(transactions);
-        for (TransactionItems transactionItems1 : transactionItems){
+        for (TransactionItems transactionItems1 : transactionItems) {
             transactionItems1.setTransactionId(transactionId);
             insertItem(transactionItems1);
         }

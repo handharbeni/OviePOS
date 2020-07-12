@@ -84,21 +84,21 @@ public class Constants {
         }
     }
 
-    public static enum REPORT_TYPE{
-        TRANSACTION ("TRANSACTION"),
-        CUSTOMER ("CUSTOMER");
+    public static enum REPORT_TYPE {
+        TRANSACTION("TRANSACTION"),
+        CUSTOMER("CUSTOMER");
 
         private final String name;
 
-        private REPORT_TYPE(String s){
+        private REPORT_TYPE(String s) {
             name = s;
         }
 
-        public boolean equalsName(String otherName){
+        public boolean equalsName(String otherName) {
             return name.equals(otherName);
         }
 
-        public String toString(){
+        public String toString() {
             return this.name;
         }
     }

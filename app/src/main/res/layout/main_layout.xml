@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:fitsSystemWindows="false">
+
     <LinearLayout
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:weightSum="1"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_weight="0.9"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:id="@+id/txtTitle"
-                android:textColor="@android:color/white"
-                android:padding="7dp"
-                android:textAlignment="center"
-                android:text="TITLE"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:padding="7dp"
+                android:text="TITLE"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
+
             <ImageView
                 android:id="@+id/iconThermalPrinter"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.1"
-                android:src="@drawable/ic_print_disconnected"
                 android:layout_width="24dp"
-                android:layout_height="24dp"/>
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:layout_weight="0.1"
+                android:src="@drawable/ic_print_disconnected" />
         </LinearLayout>
+
         <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:elevation="50dp"
             android:paddingBottom="?actionBarSize"
             app:cardCornerRadius="15dp"
-            app:cardPreventCornerOverlap="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            app:cardPreventCornerOverlap="false">
 
             <FrameLayout
                 android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
@@ -57,85 +61,92 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="center"
-        app:layout_anchorGravity="start"
-        app:fabAnimationMode="slide"
-        app:fabAlignmentMode="end"
-        app:fabCradleMargin="8dp"
-        app:fabCradleRoundedCornerRadius="8dp"
+        app:backgroundTint="@color/colorAccent"
         app:contentInsetEnd="16dp"
         app:contentInsetStart="0dp"
-        app:backgroundTint="@color/colorAccent">
+        app:fabAlignmentMode="end"
+        app:fabAnimationMode="slide"
+        app:fabCradleMargin="8dp"
+        app:fabCradleRoundedCornerRadius="8dp"
+        app:layout_anchorGravity="start">
+
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/btnGroup"
-            android:background="@android:color/transparent"
-            app:singleSelection="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="5">
+            android:background="@android:color/transparent"
+            android:weightSum="5"
+            app:singleSelection="true">
+
             <Button
                 android:id="@+id/productCategory"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:drawableTop="@drawable/ic_category"
                 android:text="Category"
-                android:textSize="10sp"
                 android:textColor="@android:color/white"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
+                android:textSize="10sp" />
+
             <Button
                 android:id="@+id/product"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:drawableTop="@drawable/ic_shoping_chart"
-                android:text="Product"
-                android:textSize="10sp"
-                android:textColor="@android:color/white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_shoping_chart"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:drawableTop="@drawable/ic_shoping_chart"
+                android:text="Product"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                app:srcCompat="@drawable/ic_shoping_chart" />
+
             <Button
                 android:id="@+id/report"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:drawableTop="@drawable/ic_print"
-                android:text="Report"
-                android:textSize="10sp"
-                android:textColor="@android:color/white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_print"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:drawableTop="@drawable/ic_print"
+                android:text="Report"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                app:srcCompat="@drawable/ic_print" />
+
             <Button
                 android:id="@+id/account"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:drawableTop="@drawable/ic_account"
-                android:text="Account"
-                android:textSize="10sp"
-                android:textColor="@android:color/white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_account"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:drawableTop="@drawable/ic_account"
+                android:text="Account"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                app:srcCompat="@drawable/ic_account" />
+
             <Button
-                android:enabled="false"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:enabled="false" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
     </com.google.android.material.bottomappbar.BottomAppBar>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:elevation="20dp"
-        app:elevation="20dp"
-        app:layout_anchor="@id/bar"
         android:id="@+id/fabOrder"
-        android:src="@drawable/ic_add"
-        android:backgroundTint="@color/colorAccent"
-        app:backgroundTint="@color/colorAccent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:elevation="20dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="20dp"
+        app:layout_anchor="@id/bar" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

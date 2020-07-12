@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="?actionBarSize"
-    android:weightSum="1"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="?actionBarSize"
+    android:orientation="vertical"
+    android:weightSum="1">
+
     <LinearLayout
-        android:layout_weight="0.1"
-        android:weightSum="1"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
         <FrameLayout
             android:id="@+id/frameProduct"
-            android:layout_weight="0.5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
+
         <FrameLayout
             android:id="@+id/frameCart"
-            android:layout_weight="0.5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
     </LinearLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNextPayment"
-        app:elevation="20dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_weight="0.9"
         android:text="PAYMENT"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        app:elevation="20dp" />
 </LinearLayout>

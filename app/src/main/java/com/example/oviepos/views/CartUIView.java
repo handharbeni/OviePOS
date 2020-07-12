@@ -10,7 +10,7 @@ public interface CartUIView extends UiView {
 
     void updateData(List<Cart> listCart);
 
-    interface CartCallback{
+    interface CartCallback {
         void onCustomerNameChange(String text);
     }
 }

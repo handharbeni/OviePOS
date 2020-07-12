@@ -49,7 +49,7 @@ public class ReportFragment extends BaseFragments
     private ReportTransactionAdapter reportTransactionAdapter;
     private ReportCustomerAdapter reportCustomerAdapter;
 
-    public static ReportFragment getInstance(){
+    public static ReportFragment getInstance() {
         return new ReportFragment();
     }
 
@@ -67,7 +67,7 @@ public class ReportFragment extends BaseFragments
         return view;
     }
 
-    void init(){
+    void init() {
         ButterKnife.bind(this, view);
         reportPresenter = new ReportPresenter(Objects.requireNonNull(getActivity()), this);
         reportPresenter.attachView(this);
@@ -77,10 +77,10 @@ public class ReportFragment extends BaseFragments
     }
 
     @OnItemSelected(R.id.typeReport)
-    public void reportSelected(AppCompatSpinner spinner, int position){
+    public void reportSelected(AppCompatSpinner spinner, int position) {
         reportPresenter.doGenerateReport(
-                position==0?
-                        Constants.REPORT_TYPE.TRANSACTION.toString():
+                position == 0 ?
+                        Constants.REPORT_TYPE.TRANSACTION.toString() :
                         Constants.REPORT_TYPE.CUSTOMER.toString()
         );
     }
@@ -124,24 +124,24 @@ public class ReportFragment extends BaseFragments
 
     @Override
     public void onPrintClick(HashMap<Transactions, List<TransactionItems>> currentItem) {
-        for (Map.Entry<Transactions, List<TransactionItems>> hmListItems : currentItem.entrySet()){
+        for (Map.Entry<Transactions, List<TransactionItems>> hmListItems : currentItem.entrySet()) {
             Transactions transactions = hmListItems.getKey();
             List<TransactionItems> listItems = hmListItems.getValue();
-            if (isPrinterReady){
+            if (isPrinterReady) {
                 mService.write(PrinterCommands.ESC_ALIGN_CENTER);
                 mService.sendMessage(getActivity().getApplicationContext().getString(R.string.app_name), "");
                 mService.write(PrinterCommands.ESC_ALIGN_RIGHT);
                 mService.sendMessage("Nota Copy", "");
                 mService.write(PrinterCommands.ESC_ALIGN_LEFT);
-                mService.sendMessage("Customer : "+transactions.getCustomerName(), "");
-                mService.sendMessage("Date : "+ Utils.getDateFromMillis(transactions.getDateNow()), "");
+                mService.sendMessage("Customer : " + transactions.getCustomerName(), "");
+                mService.sendMessage("Date : " + Utils.getDateFromMillis(transactions.getDateNow()), "");
                 mService.sendMessage(PrinterCommands.dashLine, "");
                 int total = 0;
-                for (TransactionItems items : listItems){
-                    mService.sendMessage(items.getProductName()+" ("+Utils.formatRupiah(Integer.parseInt(items.getProductPrice()))+")", "");
+                for (TransactionItems items : listItems) {
+                    mService.sendMessage(items.getProductName() + " (" + Utils.formatRupiah(Integer.parseInt(items.getProductPrice())) + ")", "");
                     int subTotal = Integer.parseInt(items.getProductPrice()) * items.getQty();
                     total += subTotal;
-                    mService.sendMessage(Utils.justifyPrintLine("x "+items.getQty(), Utils.formatRupiah(subTotal)), "");
+                    mService.sendMessage(Utils.justifyPrintLine("x " + items.getQty(), Utils.formatRupiah(subTotal)), "");
                 }
                 mService.sendMessage(PrinterCommands.dashLine, "");
                 mService.sendMessage(Utils.justifyPrintLine("TOTAL", Utils.formatRupiah(total)), "");

@@ -68,10 +68,10 @@ public class AccountFragment extends BaseFragments implements AccountUIView {
         accountPresenter.attachView(this);
 
         accountPresenter.init();
-        btnPairUnpair.setText(isPrinterReady?PAIRED_DEVICE:UNPAIRED_DEVICE);
+        btnPairUnpair.setText(isPrinterReady ? PAIRED_DEVICE : UNPAIRED_DEVICE);
     }
 
-    public void updateButton(String text){
+    public void updateButton(String text) {
         btnPairUnpair.setText(text);
     }
 

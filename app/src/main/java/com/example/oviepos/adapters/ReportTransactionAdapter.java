@@ -66,17 +66,18 @@ public class ReportTransactionAdapter extends RecyclerView.Adapter<ReportTransac
         TextView txtSellQTY;
         @BindView(R.id.txtSellPrice)
         TextView txtSellPrice;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        void bindData(HashMap<String, List<TransactionItems>> listItems){
-            for (Map.Entry<String, List<TransactionItems>> hmListItems : listItems.entrySet()){
+        void bindData(HashMap<String, List<TransactionItems>> listItems) {
+            for (Map.Entry<String, List<TransactionItems>> hmListItems : listItems.entrySet()) {
                 txtNamaProduk.setText(hmListItems.getKey());
                 int totalPrice = 0;
                 int totalQty = 0;
-                for (TransactionItems itm : hmListItems.getValue()){
+                for (TransactionItems itm : hmListItems.getValue()) {
                     totalPrice += Integer.parseInt(itm.getProductPrice()) * itm.getQty();
                     totalQty += itm.getQty();
                 }
@@ -87,7 +88,7 @@ public class ReportTransactionAdapter extends RecyclerView.Adapter<ReportTransac
         }
     }
 
-    public interface ReportTransactionListener{
+    public interface ReportTransactionListener {
         void onTransactionClick();
     }
 }

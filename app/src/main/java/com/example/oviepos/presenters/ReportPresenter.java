@@ -49,15 +49,15 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
         List<Products> listProduct = appDB.products().getAll();
         if (Constants.REPORT_TYPE.TRANSACTION.equalsName(report)) {
             List<HashMap<String, List<TransactionItems>>> listReport = new ArrayList<>();
-            for (Products products : listProduct){
+            for (Products products : listProduct) {
                 HashMap<String, List<TransactionItems>> listHashMap = new HashMap<>();
                 listHashMap.put(String.valueOf(products.getProductName()), appDB.transactions().getItems(products.getId()));
                 listReport.add(listHashMap);
             }
             getMvpView().onGenerateReportTransactionSucess(listReport);
-        } else if (Constants.REPORT_TYPE.CUSTOMER.equalsName(report)){
+        } else if (Constants.REPORT_TYPE.CUSTOMER.equalsName(report)) {
             List<HashMap<Transactions, List<TransactionItems>>> listReport = new ArrayList<>();
-            for (Transactions tr : transactions){
+            for (Transactions tr : transactions) {
                 HashMap<Transactions, List<TransactionItems>> listHashMap = new HashMap<>();
                 listHashMap.put(tr, appDB.transactions().getItemsByTransaction(tr.getId()));
                 listReport.add(listHashMap);

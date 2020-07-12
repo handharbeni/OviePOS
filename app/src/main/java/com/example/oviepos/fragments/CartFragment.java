@@ -87,7 +87,6 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
     }
 
 
-
     @Override
     public void showAllCart(List<Cart> listCarts) {
         if (listCarts != null) {

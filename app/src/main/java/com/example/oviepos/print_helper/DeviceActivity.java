@@ -98,20 +98,17 @@ public class DeviceActivity extends BaseActivity {
         view.setVisibility(View.GONE);
     }
 
-    private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            mService.cancelDiscovery();
+    private AdapterView.OnItemClickListener mDeviceClickListener = (parent, view, position, id) -> {
+        mService.cancelDiscovery();
 
-            String info = ((TextView) view).getText().toString();
-            String address = info.substring(info.length() - 17);
+        String info = ((TextView) view).getText().toString();
+        String address = info.substring(info.length() - 17);
 
-            Intent intent = new Intent();
-            intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
 
-            setResult(RESULT_OK, intent);
-            finish();
-        }
+        setResult(RESULT_OK, intent);
+        finish();
     };
 
     private void doDiscovery() {

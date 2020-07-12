@@ -261,8 +261,8 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     }
 
     @OnClick(R.id.iconThermalPrinter)
-    public void searchPrinter(){
-        if (!isPrinterReady){
+    public void searchPrinter() {
+        if (!isPrinterReady) {
             startActivityForResult(new Intent(this, DeviceActivity.class), RC_CONNECT_DEVICE);
         }
     }
@@ -271,7 +271,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     public void onDeviceConnected() {
         isPrinterReady = true;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_connected);
-        if (accountFragment != null){
+        if (accountFragment != null) {
             accountFragment.updateButton(AccountFragment.PAIRED_DEVICE);
         }
     }
@@ -280,7 +280,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     public void onDeviceConnecting() {
         isPrinterReady = false;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
-        if (accountFragment != null){
+        if (accountFragment != null) {
             accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
         }
     }
@@ -289,7 +289,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     public void onDeviceConnectionLost() {
         isPrinterReady = false;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
-        if (accountFragment != null){
+        if (accountFragment != null) {
             accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
         }
     }
@@ -298,7 +298,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     public void onDeviceUnableToConnect() {
         isPrinterReady = false;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
-        if (accountFragment != null){
+        if (accountFragment != null) {
             accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
         }
     }

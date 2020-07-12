@@ -32,7 +32,7 @@ public class OrderFragment extends BaseFragments implements CartUIView.CartCallb
     @BindView(R.id.btnNextPayment)
     MaterialButton btnNextPayment;
 
-    String customerName = "CUS"+ System.currentTimeMillis();
+    String customerName = "CUS" + System.currentTimeMillis();
 
     public static OrderFragment getInstance() {
         return new OrderFragment();
@@ -63,11 +63,11 @@ public class OrderFragment extends BaseFragments implements CartUIView.CartCallb
     }
 
     @OnClick(R.id.btnNextPayment)
-    public void nextToPayment(){
+    public void nextToPayment() {
         PaymentBottomsheet paymentBottomsheet = PaymentBottomsheet.getInstance(
                 getActivity().getApplicationContext(),
                 this.customerName
-                );
+        );
         paymentBottomsheet.showNow(getChildFragmentManager(), paymentBottomsheet.getTag());
     }
 

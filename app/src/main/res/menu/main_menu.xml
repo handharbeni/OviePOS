@@ -4,43 +4,43 @@
 
     <item
         android:id="@+id/action_product_category"
-        android:title="Category"
-        android:icon="@drawable/ic_category"
         android:checkable="true"
-        app:showAsAction="always"
-        android:enabled="false" />
+        android:enabled="false"
+        android:icon="@drawable/ic_category"
+        android:title="Category"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_product"
-        android:title="Product"
-        android:icon="@drawable/ic_favorite"
         android:checkable="true"
-        app:showAsAction="always"
-        android:enabled="false" />
+        android:enabled="false"
+        android:icon="@drawable/ic_favorite"
+        android:title="Product"
+        app:showAsAction="always" />
 
 
     <item
         android:id="@+id/action_empty"
-        android:title=""
         android:checkable="false"
         android:checked="false"
-        app:showAsAction="always"
-        android:enabled="false" />
+        android:enabled="false"
+        android:title=""
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_report"
-        android:title="Report"
-        android:icon="@drawable/ic_print"
         android:checkable="true"
-        app:showAsAction="always"
-        android:enabled="false" />
+        android:enabled="false"
+        android:icon="@drawable/ic_print"
+        android:title="Report"
+        app:showAsAction="always" />
 
 
     <item
         android:id="@+id/action_account"
-        android:title="Account"
-        android:icon="@drawable/ic_account"
         android:checkable="true"
-        app:showAsAction="always"
-        android:enabled="false" />
+        android:enabled="false"
+        android:icon="@drawable/ic_account"
+        android:title="Account"
+        app:showAsAction="always" />
 </menu>

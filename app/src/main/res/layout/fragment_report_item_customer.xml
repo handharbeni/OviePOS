@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardElevation="50dp"
-    android:elevation="50dp"
-    android:layout_margin="10dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:elevation="50dp"
+    app:cardElevation="50dp">
+
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:orientation="vertical"
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_margin="3dp"
             android:id="@+id/txtCustomerName"
-            android:text="Beni"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
+            android:layout_height="wrap_content"
             android:layout_margin="3dp"
+            android:text="Beni" />
+
+        <TextView
             android:id="@+id/txtCustomerDate"
-            android:text="12/06/2020"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:text="12/06/2020" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvItemTransaction"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,14 +57,15 @@
                 android:textAlignment="textEnd" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <Button
-            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:id="@+id/btnPrint"
-            android:text="PRINT"
-            android:layout_gravity="start"
-            android:textAlignment="center"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="PRINT"
+            android:textAlignment="center"
             tools:ignore="RtlCompat" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.cardview.widget.CardView>
