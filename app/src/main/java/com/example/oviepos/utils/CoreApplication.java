@@ -15,7 +15,9 @@ public class CoreApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instances = this;
-        StrictModeManager.enableStrictMode();
+//        StrictModeManager.enableStrictMode();
+//        StrictModeManager.allowDiskReads(CoreApplication.super::onCreate);
+
         Stetho.initializeWithDefaults(this);
     }
 

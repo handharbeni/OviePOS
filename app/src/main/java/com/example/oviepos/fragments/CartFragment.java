@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,7 +43,7 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
     AppCompatTextView txtSubTotal;
 
     @BindView(R.id.txtCustomer)
-    AppCompatEditText txtCustomer;
+    SearchView txtCustomer;
 
     String customerName = "";
 
@@ -70,13 +71,22 @@ public class CartFragment extends BaseFragments implements CartUIView, CartAdapt
 
         cartPresenter.init();
 
-        txtCustomer.setText(customerName);
+        txtCustomer.setQuery(customerName, false);
+        txtCustomer.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                cartCallback.onCustomerNameChange(newText);
+                return false;
+            }
+        });
     }
 
-    @OnTextChanged(value = R.id.txtCustomer, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void nameChanged(CharSequence charSequence){
-        cartCallback.onCustomerNameChange(charSequence.toString());
-    }
+
 
     @Override
     public void showAllCart(List<Cart> listCarts) {

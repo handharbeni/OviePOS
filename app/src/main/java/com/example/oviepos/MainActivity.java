@@ -260,32 +260,47 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
         mainPresenter.decisionScreen();
     }
 
+    @OnClick(R.id.iconThermalPrinter)
+    public void searchPrinter(){
+        if (!isPrinterReady){
+            startActivityForResult(new Intent(this, DeviceActivity.class), RC_CONNECT_DEVICE);
+        }
+    }
+
     @Override
     public void onDeviceConnected() {
         isPrinterReady = true;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_connected);
-        accountFragment.updateButton(AccountFragment.PAIRED_DEVICE);
+        if (accountFragment != null){
+            accountFragment.updateButton(AccountFragment.PAIRED_DEVICE);
+        }
     }
 
     @Override
     public void onDeviceConnecting() {
         isPrinterReady = false;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
-        accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
+        if (accountFragment != null){
+            accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
+        }
     }
 
     @Override
     public void onDeviceConnectionLost() {
         isPrinterReady = false;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
-        accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
+        if (accountFragment != null){
+            accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
+        }
     }
 
     @Override
     public void onDeviceUnableToConnect() {
         isPrinterReady = false;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
-        accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
+        if (accountFragment != null){
+            accountFragment.updateButton(AccountFragment.UNPAIRED_DEVICE);
+        }
     }
 
     void requestBluetooth() {

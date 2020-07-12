@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
         <LinearLayout
-            android:layout_margin="15dp"
+            android:layout_margin="5dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -26,8 +26,11 @@
                 android:layout_height="wrap_content"
                 android:text="Customer" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:hint="Test"
+            <androidx.appcompat.widget.SearchView
+                app:searchHintIcon="@null"
+                app:searchIcon="@null"
+                app:queryHint="Customer Name"
+                app:iconifiedByDefault="false"
                 android:id="@+id/txtCustomer"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="match_parent"

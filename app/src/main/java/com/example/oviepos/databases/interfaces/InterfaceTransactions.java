@@ -21,7 +21,7 @@ public abstract class InterfaceTransactions {
     @Insert
     public abstract long insertItem(TransactionItems transactionItems);
 
-    @Query("SELECT * FROM Transactions")
+    @Query("SELECT * FROM Transactions ORDER BY id DESC")
     public abstract List<Transactions> getAll();
 
     @Query("SELECT * FROM Transactions WHERE id = :id")

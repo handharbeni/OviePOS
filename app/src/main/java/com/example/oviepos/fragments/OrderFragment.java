@@ -32,7 +32,7 @@ public class OrderFragment extends BaseFragments implements CartUIView.CartCallb
     @BindView(R.id.btnNextPayment)
     MaterialButton btnNextPayment;
 
-    String customerName = String.valueOf(System.currentTimeMillis());
+    String customerName = "CUS"+ System.currentTimeMillis();
 
     public static OrderFragment getInstance() {
         return new OrderFragment();
