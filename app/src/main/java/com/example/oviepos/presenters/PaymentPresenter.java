@@ -20,6 +20,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.internal.Util;
 import rx.Subscription;
 
 import static com.example.oviepos.MainActivity.isPrinterReady;
@@ -74,7 +75,7 @@ public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
                 mService.sendMessage(activity.getApplicationContext().getString(R.string.app_name), "");
                 mService.write(PrinterCommands.ESC_ALIGN_LEFT);
                 mService.sendMessage("Customer : "+transactions.getCustomerName(), "");
-                mService.sendMessage("Date : "+transactions.getDateNow(), "");
+                mService.sendMessage("Date : "+ Utils.getDateFromMillis(transactions.getDateNow()), "");
                 mService.sendMessage(PrinterCommands.dashLine, "");
                 int total = 0;
                 for (TransactionItems items : transactionItems){
@@ -88,6 +89,7 @@ public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
                 mService.write(PrinterCommands.ESC_ALIGN_CENTER);
                 mService.sendMessage("TERIMA KASIH", "");
                 mService.write(PrinterCommands.ESC_ENTER);
+                mService.write(PrinterCommands.FEED_PAPER_AND_CUT);
             }
             appDB.cart().delete(appDB.cart().getAll());
             getMvpView().onPaymentSuccess();

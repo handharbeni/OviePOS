@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.example.oviepos.databases.AppDB;
 import com.example.oviepos.databases.models.responses.Products;
 import com.example.oviepos.databases.models.responses.TransactionItems;
+import com.example.oviepos.databases.models.responses.Transactions;
 import com.example.oviepos.utils.Constants;
 import com.example.oviepos.views.ReportUIView;
 import com.manishkprboilerplate.base.BasePresenter;
@@ -43,6 +44,7 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
 
     @Override
     public void doGenerateReport(String report) {
+        List<Transactions> transactions = appDB.transactions().getAll();
         List<TransactionItems> transactionItems = appDB.transactions().getAllTransactionItems();
         List<Products> listProduct = appDB.products().getAll();
         if (Constants.REPORT_TYPE.TRANSACTION.equalsName(report)) {
@@ -54,7 +56,13 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
             }
             getMvpView().onGenerateReportTransactionSucess(listReport);
         } else if (Constants.REPORT_TYPE.CUSTOMER.equalsName(report)){
-
+            List<HashMap<Transactions, List<TransactionItems>>> listReport = new ArrayList<>();
+            for (Transactions tr : transactions){
+                HashMap<Transactions, List<TransactionItems>> listHashMap = new HashMap<>();
+                listHashMap.put(tr, appDB.transactions().getItemsByTransaction(tr.getId()));
+                listReport.add(listHashMap);
+            }
+            getMvpView().onGenerateReportCustomerSuccess(listReport);
         }
     }
 }

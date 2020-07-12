@@ -22,10 +22,10 @@ public abstract class InterfaceTransactions {
     public abstract long insertItem(TransactionItems transactionItems);
 
     @Query("SELECT * FROM Transactions")
-    public abstract List<Products> getAll();
+    public abstract List<Transactions> getAll();
 
     @Query("SELECT * FROM Transactions WHERE id = :id")
-    public abstract List<Products> getById(int id);
+    public abstract List<Transactions> getById(int id);
 
     @Transaction
 //    @Insert(onConflict = OnConflictStrategy.ABORT)
@@ -45,4 +45,7 @@ public abstract class InterfaceTransactions {
 
     @Query("SELECT * FROM TransactionItems WHERE productId = :productId")
     public abstract List<TransactionItems> getItems(int productId);
+
+    @Query("SELECT * FROM TransactionItems WHERE transactionId = :transactionId")
+    public abstract List<TransactionItems> getItemsByTransaction(int transactionId);
 }

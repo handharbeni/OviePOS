@@ -1,6 +1,9 @@
 package com.example.oviepos.utils;
 
+import android.annotation.SuppressLint;
+
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -39,22 +42,29 @@ public class Utils {
         return String.format("%s/%s/%s", sDay, sMonth, sYear);
     }
 
-    public static String formatRupiah(long rupiah){
+    public static String formatRupiah(long rupiah) {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
         return numberFormat.format(rupiah);
     }
 
-    public static String justifyPrintLine(String sLeft, String sRight){
+    public static String justifyPrintLine(String sLeft, String sRight) {
         int iLeft = sLeft.length();
         int iRight = sRight.length();
         int iTotal = iLeft + iRight;
         int iWhiteSpace = 30 - iTotal;
         StringBuilder whiteSpace = new StringBuilder(" ");
-        if (iTotal >= 0){
+        if (iTotal >= 0) {
             for (int i = 0; i < iWhiteSpace; i++) {
                 whiteSpace.append(" ");
             }
         }
-        return sLeft+whiteSpace+sRight;
+        return sLeft + whiteSpace + sRight;
+    }
+
+    public static String getDate(long milliSeconds, String dateFormat) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 }
