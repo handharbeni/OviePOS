@@ -123,4 +123,20 @@ public class Transactions implements Serializable {
     public void setDateNow(Long dateNow) {
         this.dateNow = dateNow;
     }
+
+    @Override
+    public String toString() {
+        return "Transactions{" +
+                "id=" + id +
+                ", productId='" + productId + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", transactionsType='" + transactionsType + '\'' +
+                ", paymentType='" + paymentType + '\'' +
+                ", productPrice='" + productPrice + '\'' +
+                ", productName='" + productName + '\'' +
+                ", timeIn=" + timeIn +
+                ", timeOut=" + timeOut +
+                ", dateNow=" + dateNow +
+                '}';
+    }
 }

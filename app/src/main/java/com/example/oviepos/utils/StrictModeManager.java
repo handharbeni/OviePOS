@@ -28,6 +28,8 @@ public class StrictModeManager {
         StrictMode.setThreadPolicy(threadPolicyBuilder.build());
         StrictMode.setVmPolicy(vmPolicyBuilder.build());
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     public static void allowDiskReads(Runnable runnable) {

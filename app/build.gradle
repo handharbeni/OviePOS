@@ -80,5 +80,6 @@ dependencies {
     // tableView
     implementation 'com.evrencoskun.library:tableview:0.8.9.2'
     implementation files('libs/bluetoothsdk.jar')
-
+    implementation files('libs/simpleftp')
+    implementation 'commons-net:commons-net:3.6'
 }

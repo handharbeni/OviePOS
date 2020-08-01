@@ -83,4 +83,16 @@ public class TransactionItems implements Serializable {
     public void setQty(int qty) {
         this.qty = qty;
     }
+
+    @Override
+    public String toString() {
+        return "TransactionItems{" +
+                "id=" + id +
+                ", transactionId=" + transactionId +
+                ", productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", productPrice='" + productPrice + '\'' +
+                ", qty=" + qty +
+                '}';
+    }
 }

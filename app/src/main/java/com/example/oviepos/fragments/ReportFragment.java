@@ -1,12 +1,17 @@
 package com.example.oviepos.fragments;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +28,8 @@ import com.example.oviepos.utils.Constants;
 import com.example.oviepos.utils.Utils;
 import com.example.oviepos.views.ReportUIView;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,13 +37,16 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
 import static com.example.oviepos.MainActivity.isPrinterReady;
 import static com.example.oviepos.MainActivity.mService;
 
 public class ReportFragment extends BaseFragments
-        implements ReportUIView.ReportView, ReportTransactionAdapter.ReportTransactionListener, ReportCustomerAdapter.ReportCustomerInterface {
+        implements ReportUIView.ReportView,
+        ReportTransactionAdapter.ReportTransactionListener,
+        ReportCustomerAdapter.ReportCustomerInterface {
 
     private ReportPresenter reportPresenter;
     private View view;
@@ -45,9 +55,16 @@ public class ReportFragment extends BaseFragments
     AppCompatSpinner typeReport;
     @BindView(R.id.rvReport)
     RecyclerView rvReport;
+    @BindView(R.id.btnCreateLog)
+    AppCompatButton btnCreateLog;
 
     private ReportTransactionAdapter reportTransactionAdapter;
     private ReportCustomerAdapter reportCustomerAdapter;
+
+    List<HashMap<String, List<TransactionItems>>> listReportItems = new ArrayList<>();
+    List<HashMap<Transactions, List<TransactionItems>>> listReportCustomer = new ArrayList<>();
+
+    ProgressDialog progressDialog;
 
     public static ReportFragment getInstance() {
         return new ReportFragment();
@@ -85,8 +102,21 @@ public class ReportFragment extends BaseFragments
         );
     }
 
+    @OnClick(R.id.btnCreateLog)
+    public void onCreateClick(){
+        switch (typeReport.getSelectedItem().toString().toLowerCase()){
+            case "customer" :
+                reportPresenter.createCustomerReport(listReportCustomer);
+                break;
+            case "transaction" :
+                reportPresenter.createTransactionReport(listReportItems);
+                break;
+        }
+    }
+
     @Override
     public void onGenerateReportTransactionSucess(List<HashMap<String, List<TransactionItems>>> listReportItems) {
+        this.listReportItems = listReportItems;
         rvReport.removeAllViewsInLayout();
         rvReport.requestLayout();
         reportTransactionAdapter = new ReportTransactionAdapter(getActivity().getApplicationContext(),
@@ -98,6 +128,7 @@ public class ReportFragment extends BaseFragments
 
     @Override
     public void onGenerateReportCustomerSuccess(List<HashMap<Transactions, List<TransactionItems>>> listReportItems) {
+        this.listReportCustomer = listReportItems;
         rvReport.removeAllViewsInLayout();
         rvReport.requestLayout();
         reportCustomerAdapter = new ReportCustomerAdapter(getActivity().getApplicationContext(),
@@ -107,9 +138,27 @@ public class ReportFragment extends BaseFragments
         rvReport.setAdapter(reportCustomerAdapter);
     }
 
+
+
     @Override
     public void onGenerateReportFailed(String message) {
 
+    }
+
+
+
+    @Override
+    public void onUploadSuccess() {
+        if (progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onUploading() {
+        progressDialog = Utils.progressDialog(getActivity(), "Uploading Log");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     @Override
@@ -153,4 +202,35 @@ public class ReportFragment extends BaseFragments
 
         }
     }
+
+//    public class UploadLog extends AsyncTask<Activity, Integer, String> {
+//        ProgressDialog progressDialog;
+//        Activity activity;
+//        @Override
+//        protected void onPostExecute(String s) {
+//            // sesudah
+//            super.onPostExecute(s);
+//            if (progressDialog != null){
+//                progressDialog.dismiss();
+//            }
+//        }
+//
+//        @Override
+//        protected String doInBackground(Activity... activities) {
+//            this.activity = activity;
+//            try {
+//                Utils.uploadToFtp(Utils.getFiles(activities[0]));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            // sebelum
+//            super.onPreExecute();
+//            progressDialog = Utils.progressDialog(getInstance().getActivity(), "Uploading");
+//        }
+//    }
 }

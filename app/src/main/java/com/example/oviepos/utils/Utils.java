@@ -1,10 +1,28 @@
 package com.example.oviepos.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.jibble.simpleftp.SimpleFTP;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class Utils {
@@ -66,5 +84,73 @@ public class Utils {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
         return formatter.format(calendar.getTime());
+    }
+
+    public static void generateLogTransaction(Context context, String sFileName, String sBody) {
+        File dir = new File(context.getFilesDir(), "Jatim-Pintar");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
+        try {
+            File gpxfile = new File(dir, sFileName);
+            if (!gpxfile.exists()) {
+                gpxfile.createNewFile();
+            }
+            Log.d("Utils", "generateLogTransaction: " + gpxfile);
+            FileWriter writer = new FileWriter(gpxfile);
+            writer.append(sBody);
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<File> getFiles(Context context) {
+        File dir = new File(context.getFilesDir(), "Jatim-Pintar");
+        try {
+            return Arrays.asList(dir.listFiles());
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public static void uploadToFtp(List<File> listFile) throws IOException {
+        FTPClient ftpClient = new FTPClient();
+        ftpClient.connect("files.000webhost.com");
+        ftpClient.login("jatimpintar", "nollimakali86");
+        ftpClient.cwd("/public_html/FileLogTransaction/");
+        ftpClient.enterLocalPassiveMode();
+        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+        for (File file : listFile){
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ftpClient.storeFile(file.getName(), fileInputStream);
+//                ftpClient.stor(file.getPath());
+            fileInputStream.close();
+        }
+        ftpClient.logout();
+        ftpClient.disconnect();
+    }
+
+    public static void uploadToFtp(File file) {
+        try {
+            FTPClient ftpClient = new FTPClient();
+            ftpClient.connect("files.000webhost.com");
+            ftpClient.login("jatimpintar", "nollimakali86");
+            ftpClient.enterLocalPassiveMode();
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            ftpClient.stor(file.getPath());
+            ftpClient.logout();
+            ftpClient.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ProgressDialog progressDialog(Activity activity, String message){
+        ProgressDialog pd = new ProgressDialog(activity);
+        pd.setMessage(message);
+        return pd;
     }
 }

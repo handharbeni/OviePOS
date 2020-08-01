@@ -79,8 +79,8 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     FloatingActionButton fabOrder;
     @BindView(R.id.content)
     FrameLayout content;
-    @BindView(R.id.txtTitle)
-    AppCompatTextView txtTitle;
+//    @BindView(R.id.txtTitle)
+//    AppCompatTextView txtTitle;
     @BindView(R.id.iconThermalPrinter)
     ImageView iconThermalPrinter;
 
@@ -185,41 +185,35 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
         registerLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
 
-        txtTitle.setText(R.string.label_cart);
         fillFragment(OrderFragment.getInstance());
     }
 
     @Override
     public void fragmentCategory() {
-        txtTitle.setText(R.string.label_category);
         categoryFragment = CategoryFragment.getInstance();
         fillFragment(categoryFragment);
     }
 
     @Override
     public void fragmentProduct() {
-        txtTitle.setText(R.string.label_product);
         productFragment = ProductFragment.getInstance(false);
         fillFragment(productFragment);
     }
 
     @Override
     public void fragmentReport() {
-        txtTitle.setText(R.string.label_report);
         reportFragment = ReportFragment.getInstance();
         fillFragment(reportFragment);
     }
 
     @Override
     public void fragmentAccount() {
-        txtTitle.setText(R.string.label_account);
         accountFragment = AccountFragment.getInstance();
         fillFragment(accountFragment);
     }
 
     @Override
     public void fragmentCart() {
-        txtTitle.setText(R.string.label_cart);
         orderFragment = OrderFragment.getInstance();
         fillFragment(orderFragment);
     }

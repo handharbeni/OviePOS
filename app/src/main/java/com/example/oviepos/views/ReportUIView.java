@@ -14,11 +14,19 @@ public interface ReportUIView {
         void onGenerateReportCustomerSuccess(List<HashMap<Transactions, List<TransactionItems>>> listReportItems);
 
         void onGenerateReportFailed(String message);
+
+        void onUploadSuccess();
+
+        void onUploading();
     }
 
     interface ReportPresenter {
         void init();
 
         void doGenerateReport(String report);
+
+        void createTransactionReport(List<HashMap<String, List<TransactionItems>>> listReportItems);
+
+        void createCustomerReport(List<HashMap<Transactions, List<TransactionItems>>> listReportItems);
     }
 }

@@ -1,6 +1,12 @@
 package com.example.oviepos.presenters;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.SpannedString;
+import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 
@@ -9,12 +15,16 @@ import com.example.oviepos.databases.models.responses.Products;
 import com.example.oviepos.databases.models.responses.TransactionItems;
 import com.example.oviepos.databases.models.responses.Transactions;
 import com.example.oviepos.utils.Constants;
+import com.example.oviepos.utils.Utils;
 import com.example.oviepos.views.ReportUIView;
 import com.manishkprboilerplate.base.BasePresenter;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> implements ReportUIView.ReportPresenter {
     private Activity activity;
@@ -63,6 +73,91 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
                 listReport.add(listHashMap);
             }
             getMvpView().onGenerateReportCustomerSuccess(listReport);
+        }
+    }
+
+    @Override
+    public void createTransactionReport(List<HashMap<String, List<TransactionItems>>> listReportItems) {
+        try {
+            SpannableStringBuilder sBody = new SpannableStringBuilder();
+            for (HashMap<String, List<TransactionItems>> listReportItem : listReportItems) {
+                for (Map.Entry<String, List<TransactionItems>> listReport : listReportItem.entrySet()){
+                    sBody.append(listReport.getKey()+" : ");
+                    sBody.append("\n");
+                    for (TransactionItems items : listReport.getValue()){
+                        sBody.append(items.toString());
+                        sBody.append("\n");
+                    }
+                }
+            }
+
+            long currentMillis = System.currentTimeMillis();
+            Utils.generateLogTransaction(
+                    activity.getApplicationContext(),
+                    "TransactionReport-{"+String.valueOf(currentMillis)+"}.txt",
+                    sBody.toString()
+            );
+
+
+            new UploadLog().execute(activity);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void createCustomerReport(List<HashMap<Transactions, List<TransactionItems>>> listReportItems) {
+        try {
+//            getMvpView().onUploading();
+            SpannableStringBuilder sBody = new SpannableStringBuilder();
+            for (HashMap<Transactions, List<TransactionItems>> listReportItem : listReportItems){
+                for (Map.Entry<Transactions, List<TransactionItems>> listReport : listReportItem.entrySet()){
+                    sBody.append(listReport.getKey().toString());
+                    sBody.append("\n");
+                    for (TransactionItems items : listReport.getValue()){
+                        sBody.append(items.toString());
+                        sBody.append("\n");
+                    }
+                }
+            }
+
+            long currentMillis = System.currentTimeMillis();
+            Utils.generateLogTransaction(
+                    activity.getApplicationContext(),
+                    "CustomerTransactions-{"+String.valueOf(currentMillis)+"}.txt",
+                    sBody.toString());
+
+            new UploadLog().execute(activity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public class UploadLog extends AsyncTask<Activity, Integer, String> {
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPostExecute(String s) {
+            // sesudah
+            super.onPostExecute(s);
+            getMvpView().onUploadSuccess();
+        }
+
+        @Override
+        protected String doInBackground(Activity... activities) {
+            try {
+                Utils.uploadToFtp(Utils.getFiles(activities[0]));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // sebelum
+            super.onPreExecute();
+            getMvpView().onUploading();
         }
     }
 }
