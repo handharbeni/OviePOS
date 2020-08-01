@@ -86,18 +86,18 @@ public class Utils {
         return formatter.format(calendar.getTime());
     }
 
-    public static void generateLogTransaction(Context context, String sFileName, String sBody) {
+    public static File generateLogTransaction(Context context, String sFileName, String sBody) {
+        File gpxfile = null;
         File dir = new File(context.getFilesDir(), "Jatim-Pintar");
         if (!dir.exists()) {
             dir.mkdir();
         }
 
         try {
-            File gpxfile = new File(dir, sFileName);
+            gpxfile = new File(dir, sFileName);
             if (!gpxfile.exists()) {
                 gpxfile.createNewFile();
             }
-            Log.d("Utils", "generateLogTransaction: " + gpxfile);
             FileWriter writer = new FileWriter(gpxfile);
             writer.append(sBody);
             writer.flush();
@@ -105,6 +105,8 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return gpxfile;
     }
 
     public static List<File> getFiles(Context context) {
@@ -138,9 +140,14 @@ public class Utils {
             FTPClient ftpClient = new FTPClient();
             ftpClient.connect("files.000webhost.com");
             ftpClient.login("jatimpintar", "nollimakali86");
+            ftpClient.cwd("/public_html/FileLogTransaction/");
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-            ftpClient.stor(file.getPath());
+
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ftpClient.storeFile(file.getName(), fileInputStream);
+            fileInputStream.close();
+
             ftpClient.logout();
             ftpClient.disconnect();
         } catch (IOException e) {

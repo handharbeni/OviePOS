@@ -202,35 +202,4 @@ public class ReportFragment extends BaseFragments
 
         }
     }
-
-//    public class UploadLog extends AsyncTask<Activity, Integer, String> {
-//        ProgressDialog progressDialog;
-//        Activity activity;
-//        @Override
-//        protected void onPostExecute(String s) {
-//            // sesudah
-//            super.onPostExecute(s);
-//            if (progressDialog != null){
-//                progressDialog.dismiss();
-//            }
-//        }
-//
-//        @Override
-//        protected String doInBackground(Activity... activities) {
-//            this.activity = activity;
-//            try {
-//                Utils.uploadToFtp(Utils.getFiles(activities[0]));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//            // sebelum
-//            super.onPreExecute();
-//            progressDialog = Utils.progressDialog(getInstance().getActivity(), "Uploading");
-//        }
-//    }
 }

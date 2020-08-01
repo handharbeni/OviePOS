@@ -92,14 +92,15 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
             }
 
             long currentMillis = System.currentTimeMillis();
-            Utils.generateLogTransaction(
+            File file = Utils.generateLogTransaction(
                     activity.getApplicationContext(),
                     "TransactionReport-{"+String.valueOf(currentMillis)+"}.txt",
                     sBody.toString()
             );
 
+            Log.d(TAG, "createTransactionReport: "+file);
 
-            new UploadLog().execute(activity);
+            new UploadLog().execute(file);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -108,7 +109,6 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
     @Override
     public void createCustomerReport(List<HashMap<Transactions, List<TransactionItems>>> listReportItems) {
         try {
-//            getMvpView().onUploading();
             SpannableStringBuilder sBody = new SpannableStringBuilder();
             for (HashMap<Transactions, List<TransactionItems>> listReportItem : listReportItems){
                 for (Map.Entry<Transactions, List<TransactionItems>> listReport : listReportItem.entrySet()){
@@ -122,19 +122,21 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
             }
 
             long currentMillis = System.currentTimeMillis();
-            Utils.generateLogTransaction(
+            File file = Utils.generateLogTransaction(
                     activity.getApplicationContext(),
                     "CustomerTransactions-{"+String.valueOf(currentMillis)+"}.txt",
                     sBody.toString());
 
-            new UploadLog().execute(activity);
+            Log.d(TAG, "createTransactionReport: "+file);
+
+            new UploadLog().execute(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public class UploadLog extends AsyncTask<Activity, Integer, String> {
+    public class UploadLog extends AsyncTask<File, Integer, String> {
         ProgressDialog progressDialog;
         @Override
         protected void onPostExecute(String s) {
@@ -144,12 +146,8 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
         }
 
         @Override
-        protected String doInBackground(Activity... activities) {
-            try {
-                Utils.uploadToFtp(Utils.getFiles(activities[0]));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        protected String doInBackground(File... files) {
+            Utils.uploadToFtp(files[0]);
             return null;
         }
 

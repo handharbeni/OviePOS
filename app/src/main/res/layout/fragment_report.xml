@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:text="Create Log"
+        android:text="Create Log And Upload"
         android:id="@+id/btnCreateLog"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintBottom_toBottomOf="parent"
