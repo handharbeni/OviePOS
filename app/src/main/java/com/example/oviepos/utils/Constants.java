@@ -3,13 +3,15 @@ package com.example.oviepos.utils;
 import android.Manifest;
 
 public class Constants {
-    public static final int versionDb = 3;
+    public static final int versionDb = 4;
     public static final boolean exportSchema = false;
     public static final String nameDb = "ovie-pos";
 
     public static final String STATE_LOGIN = "STATE_LOGIN";
     public static final String DEVICE_ID = "DEVICES_ID";
     public static final String USERNAME = "USERNAME";
+
+    public static final Integer PPN_PERCENT = 10;
 
     public static String[] PERMISSIONS = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -21,6 +23,25 @@ public class Constants {
             Manifest.permission.BLUETOOTH,
             Manifest.permission.BLUETOOTH_ADMIN
     };
+
+    public static enum DISCOUNT_TYPE{
+        NOMINAL_VALUE("NOMINAL"),
+        PERCENT_VALUE("PROSENTASE");
+
+        private final String name;
+
+        private DISCOUNT_TYPE(String name) {
+            this.name = name;
+        }
+
+        public boolean equalsName(String otherName){
+            return name.equalsIgnoreCase(otherName);
+        }
+
+        public String toString(){
+            return this.name;
+        }
+    }
 
     public static enum TRANSACTION_TYPE {
         TAKE_AWAY("TAKE AWAY"),

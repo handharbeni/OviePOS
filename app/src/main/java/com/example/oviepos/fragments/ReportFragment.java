@@ -103,12 +103,12 @@ public class ReportFragment extends BaseFragments
     }
 
     @OnClick(R.id.btnCreateLog)
-    public void onCreateClick(){
-        switch (typeReport.getSelectedItem().toString().toLowerCase()){
-            case "customer" :
+    public void onCreateClick() {
+        switch (typeReport.getSelectedItem().toString().toLowerCase()) {
+            case "customer":
                 reportPresenter.createCustomerReport(listReportCustomer);
                 break;
-            case "transaction" :
+            case "transaction":
                 reportPresenter.createTransactionReport(listReportItems);
                 break;
         }
@@ -139,17 +139,15 @@ public class ReportFragment extends BaseFragments
     }
 
 
-
     @Override
     public void onGenerateReportFailed(String message) {
 
     }
 
 
-
     @Override
     public void onUploadSuccess() {
-        if (progressDialog != null){
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
@@ -192,7 +190,13 @@ public class ReportFragment extends BaseFragments
                     total += subTotal;
                     mService.sendMessage(Utils.justifyPrintLine("x " + items.getQty(), Utils.formatRupiah(subTotal)), "");
                 }
+
+                total += (int) Math.round(Double.parseDouble(transactions.getPajakValue()));
+                total -= (int) Math.round(Double.parseDouble(transactions.getDiscountValue()));
+
                 mService.sendMessage(PrinterCommands.dashLine, "");
+                mService.sendMessage(Utils.justifyPrintLine("PPN (10%)", Utils.formatRupiah(Long.parseLong(transactions.getPajakValue()))), "");
+                mService.sendMessage(Utils.justifyPrintLine("DISCOUNT", Utils.formatRupiah(Long.parseLong(transactions.getDiscountValue()))), "");
                 mService.sendMessage(Utils.justifyPrintLine("TOTAL", Utils.formatRupiah(total)), "");
                 mService.write(PrinterCommands.ESC_ALIGN_CENTER);
                 mService.sendMessage("TERIMA KASIH", "");

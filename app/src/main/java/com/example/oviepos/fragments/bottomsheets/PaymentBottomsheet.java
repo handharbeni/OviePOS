@@ -40,6 +40,9 @@ import butterknife.OnTextChanged;
 public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUIView.paymentUIView, CartAdapter.CartAdapterInterface {
     private Context context;
     private String customerName;
+    private String discountType;
+    private String discountValue;
+    private String ppn;
 
     private PaymentPresenter paymentPresenter;
 
@@ -86,13 +89,16 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
     private View view;
     private List<Cart> listCarts = new ArrayList<>();
 
-    public static PaymentBottomsheet getInstance(Context context, String customerName) {
-        return new PaymentBottomsheet(context, customerName);
+    public static PaymentBottomsheet getInstance(Context context, String customerName, String discountType, String discountValue, String ppn) {
+        return new PaymentBottomsheet(context, customerName, discountType, discountValue, ppn);
     }
 
-    public PaymentBottomsheet(Context context, String customerName) {
+    public PaymentBottomsheet(Context context, String customerName, String discountType, String discountValue, String ppn) {
         this.context = context;
         this.customerName = customerName;
+        this.discountType = discountType;
+        this.discountValue = discountValue;
+        this.ppn = ppn;
     }
 
     @Nullable
@@ -170,11 +176,14 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
         transactions.setPaymentType(paymentType.getSelectedItem().toString());
         transactions.setTransactionsType(transactionType.getSelectedItem().toString());
         transactions.setCustomerName(customerName);
+        transactions.setDiscountType(discountType);
+        transactions.setDiscountValue(discountValue);
+        transactions.setPajakValue(ppn);
         transactions.setDateNow(System.currentTimeMillis());
         transactions.setTimeIn(System.currentTimeMillis());
         transactions.setTimeOut(System.currentTimeMillis());
 
-        paymentPresenter.doPayment(transactions, listItem);
+        paymentPresenter.doPayment(transactions, listItem, discountValue, ppn);
     }
 
     @Override
@@ -200,6 +209,10 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
         for (Cart cart : listCarts) {
             total += (cart.getQty() * Integer.parseInt(cart.getProductPrice()));
         }
+
+        total += (int) Math.round(Double.parseDouble(ppn));
+        total -= (int) Math.round(Double.parseDouble(discountValue));
+
         paymentTotal.setText(Utils.formatRupiah(total));
     }
 

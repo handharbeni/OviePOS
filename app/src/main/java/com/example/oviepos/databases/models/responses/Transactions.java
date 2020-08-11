@@ -23,25 +23,14 @@ public class Transactions implements Serializable {
     private String paymentType;
     private String productPrice;
     private String productName;
+    private String discountValue;
+    private String discountType;
+    private String pajakValue;
     private Long timeIn;
     private Long timeOut;
     private Long dateNow;
 
     public Transactions() {
-    }
-
-    @Ignore
-    public Transactions(Integer id, String productId, String customerName, String transactionsType, String paymentType, String productPrice, String productName, Long timeIn, Long timeOut, Long dateNow) {
-        this.id = id;
-        this.productId = productId;
-        this.customerName = customerName;
-        this.transactionsType = transactionsType;
-        this.paymentType = paymentType;
-        this.productPrice = productPrice;
-        this.productName = productName;
-        this.timeIn = timeIn;
-        this.timeOut = timeOut;
-        this.dateNow = dateNow;
     }
 
     public Integer getId() {
@@ -100,6 +89,30 @@ public class Transactions implements Serializable {
         this.productName = productName;
     }
 
+    public String getDiscountValue() {
+        return discountValue;
+    }
+
+    public void setDiscountValue(String discountValue) {
+        this.discountValue = discountValue;
+    }
+
+    public String getDiscountType() {
+        return discountType;
+    }
+
+    public void setDiscountType(String discountType) {
+        this.discountType = discountType;
+    }
+
+    public String getPajakValue() {
+        return pajakValue;
+    }
+
+    public void setPajakValue(String pajakValue) {
+        this.pajakValue = pajakValue;
+    }
+
     public Long getTimeIn() {
         return timeIn;
     }
@@ -126,7 +139,7 @@ public class Transactions implements Serializable {
 
     @Override
     public String toString() {
-        return "Transactions{" +
+        return "Transactions\n{" +
                 "id=" + id +
                 ", productId='" + productId + '\'' +
                 ", customerName='" + customerName + '\'' +
@@ -134,6 +147,9 @@ public class Transactions implements Serializable {
                 ", paymentType='" + paymentType + '\'' +
                 ", productPrice='" + productPrice + '\'' +
                 ", productName='" + productName + '\'' +
+                ", discountValue='" + discountValue + '\'' +
+                ", discountType='" + discountType + '\'' +
+                ", pajakValue='" + pajakValue + '\'' +
                 ", timeIn=" + timeIn +
                 ", timeOut=" + timeOut +
                 ", dateNow=" + dateNow +

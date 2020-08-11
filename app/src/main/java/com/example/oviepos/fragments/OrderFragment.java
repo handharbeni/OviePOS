@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.oviepos.R;
 import com.example.oviepos.fragments.bottomsheets.PaymentBottomsheet;
 import com.example.oviepos.utils.BaseFragments;
+import com.example.oviepos.utils.Constants;
 import com.example.oviepos.views.CartUIView;
 import com.google.android.material.button.MaterialButton;
 
@@ -33,6 +34,9 @@ public class OrderFragment extends BaseFragments implements CartUIView.CartCallb
     MaterialButton btnNextPayment;
 
     String customerName = "CUS" + System.currentTimeMillis();
+    String discountType = Constants.DISCOUNT_TYPE.NOMINAL_VALUE.toString();
+    String discount = "0";
+    String ppn = "0";
 
     public static OrderFragment getInstance() {
         return new OrderFragment();
@@ -66,7 +70,10 @@ public class OrderFragment extends BaseFragments implements CartUIView.CartCallb
     public void nextToPayment() {
         PaymentBottomsheet paymentBottomsheet = PaymentBottomsheet.getInstance(
                 getActivity().getApplicationContext(),
-                this.customerName
+                this.customerName,
+                this.discountType,
+                this.discount,
+                this.ppn
         );
         paymentBottomsheet.showNow(getChildFragmentManager(), paymentBottomsheet.getTag());
     }
@@ -74,5 +81,20 @@ public class OrderFragment extends BaseFragments implements CartUIView.CartCallb
     @Override
     public void onCustomerNameChange(String text) {
         this.customerName = text;
+    }
+
+    @Override
+    public void onDiscountTypeChange(String discountType) {
+        this.discountType = discountType;
+    }
+
+    @Override
+    public void onDiscountValueChange(String discountValue) {
+        this.discount = discountValue;
+    }
+
+    @Override
+    public void onPPNChange(String ppn) {
+        this.ppn = ppn;
     }
 }

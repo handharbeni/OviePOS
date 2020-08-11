@@ -66,6 +66,10 @@ public class ReportCustomerAdapter extends RecyclerView.Adapter<ReportCustomerAd
         TextView txtCustomerDate;
         @BindView(R.id.rvItemTransaction)
         RecyclerView rvItemTransaction;
+        @BindView(R.id.txtPPN)
+        TextView txtPPN;
+        @BindView(R.id.txtDiscountValue)
+        TextView txtDiscountValue;
         @BindView(R.id.txtTotal)
         TextView txtTotal;
         @BindView(R.id.btnPrint)
@@ -87,6 +91,13 @@ public class ReportCustomerAdapter extends RecyclerView.Adapter<ReportCustomerAd
                 for (TransactionItems itm : listItem) {
                     totalPrice += Integer.parseInt(itm.getProductPrice()) * itm.getQty();
                 }
+
+                txtPPN.setText(transactions.getPajakValue());
+                txtDiscountValue.setText(transactions.getDiscountValue());
+
+                totalPrice += (int) Math.round(Double.parseDouble(transactions.getPajakValue()));
+                totalPrice -= (int) Math.round(Double.parseDouble(transactions.getDiscountValue()));
+
                 ReportCustomerItemAdapter reportCustomerItemAdapter =
                         new ReportCustomerItemAdapter(context, listItem);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);

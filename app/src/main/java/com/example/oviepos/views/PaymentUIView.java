@@ -12,7 +12,7 @@ public interface PaymentUIView {
     interface paymentPresenter {
         void init();
 
-        void doPayment(Transactions transactions, List<TransactionItems> transactionItems);
+        void doPayment(Transactions transactions, List<TransactionItems> transactionItems, String discount, String ppn);
     }
 
     interface paymentUIView extends UiView {

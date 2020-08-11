@@ -67,7 +67,7 @@ public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
     }
 
     @Override
-    public void doPayment(Transactions transactions, List<TransactionItems> transactionItems) {
+    public void doPayment(Transactions transactions, List<TransactionItems> transactionItems, String discount, String ppn) {
         try {
             appDB.transactions().insertTransaction(transactions, transactionItems);
             if (isPrinterReady) {
@@ -84,7 +84,13 @@ public class PaymentPresenter extends BasePresenter<PaymentUIView.paymentUIView>
                     total += subTotal;
                     mService.sendMessage(Utils.justifyPrintLine("x " + items.getQty(), Utils.formatRupiah(subTotal)), "");
                 }
+
+                total += Integer.parseInt(ppn);
+                total -= Integer.parseInt(discount);
+
                 mService.sendMessage(PrinterCommands.dashLine, "");
+                mService.sendMessage(Utils.justifyPrintLine("PPN (10%)", Utils.formatRupiah(Long.parseLong(ppn))), "");
+                mService.sendMessage(Utils.justifyPrintLine("DISCOUNT", Utils.formatRupiah(Long.parseLong(discount))), "");
                 mService.sendMessage(Utils.justifyPrintLine("TOTAL", Utils.formatRupiah(total)), "");
                 mService.write(PrinterCommands.ESC_ALIGN_CENTER);
                 mService.sendMessage("TERIMA KASIH", "");

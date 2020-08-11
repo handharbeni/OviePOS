@@ -12,5 +12,8 @@ public interface CartUIView extends UiView {
 
     interface CartCallback {
         void onCustomerNameChange(String text);
+        void onDiscountTypeChange(String discountType);
+        void onDiscountValueChange(String discountValue);
+        void onPPNChange(String ppn);
     }
 }

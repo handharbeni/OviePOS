@@ -17,18 +17,25 @@
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/txtProductName"
+        android:singleLine="true"
+        android:lines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Product Name" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/txtProductPrice"
+        android:singleLine="true"
+        android:lines="1"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Product Price" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/txtProductSKU"
+        android:singleLine="true"
+        android:lines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Product SKU" />

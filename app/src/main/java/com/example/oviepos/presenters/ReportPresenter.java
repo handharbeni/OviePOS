@@ -82,12 +82,14 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
             SpannableStringBuilder sBody = new SpannableStringBuilder();
             for (HashMap<String, List<TransactionItems>> listReportItem : listReportItems) {
                 for (Map.Entry<String, List<TransactionItems>> listReport : listReportItem.entrySet()){
-                    sBody.append(listReport.getKey()+" : ");
+                    sBody.append(listReport.getKey() +" : ");
                     sBody.append("\n");
                     for (TransactionItems items : listReport.getValue()){
                         sBody.append(items.toString());
                         sBody.append("\n");
                     }
+                    sBody.append("\n");
+                    sBody.append("\n");
                 }
             }
 
@@ -118,6 +120,8 @@ public class ReportPresenter extends BasePresenter<ReportUIView.ReportView> impl
                         sBody.append(items.toString());
                         sBody.append("\n");
                     }
+                    sBody.append("\n");
+                    sBody.append("\n");
                 }
             }
 

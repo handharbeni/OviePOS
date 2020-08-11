@@ -12,4 +12,8 @@
         <item>TRANSACTION</item>
         <item>CUSTOMER</item>
     </array>
+    <array name="discount_type">
+        <item>NOMINAL</item>
+        <item>PROSENTASE (%)</item>
+    </array>
 </resources>

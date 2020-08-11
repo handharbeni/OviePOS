@@ -86,7 +86,7 @@ public class TransactionItems implements Serializable {
 
     @Override
     public String toString() {
-        return "TransactionItems{" +
+        return "TransactionItems\n{" +
                 "id=" + id +
                 ", transactionId=" + transactionId +
                 ", productId=" + productId +
