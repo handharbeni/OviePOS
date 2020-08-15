@@ -134,13 +134,14 @@ public class MainPresenter extends BasePresenter<MainUIView> {
 
     public void doLogin(TextInputLayout txtUsername, TextInputLayout txtPassword) {
         if (!isValidated(txtUsername) || !isValidated(txtPassword)) {
+            getMvpView().loginFailed();
             return;
         }
         toolsFirebase.listenData(
                 Constants.DB_USER,
                 txtUsername.getEditText().getText().toString(),
                 documentSnapshot -> {
-                    if (documentSnapshot != null) {
+                    if (documentSnapshot.exists()) {
                         try {
                             String passwordDb = documentSnapshot.get(Constants.FIELD_PASSWORD).toString();
                             Log.d(TAG, "doLogin: "+passwordDb);
@@ -173,32 +174,44 @@ public class MainPresenter extends BasePresenter<MainUIView> {
 
     public void doRegister(TextInputLayout txtUsername, TextInputLayout txtPassword) {
         if (!isValidated(txtUsername) || !isValidated(txtPassword)) {
+            getMvpView().registerFailed();
             return;
         }
-        Map<String, String> mapData = new HashMap<>();
-        mapData.put(Constants.FIELD_USERNAME, txtUsername.getEditText().getText().toString());
-        mapData.put(Constants.FIELD_PASSWORD, txtPassword.getEditText().getText().toString());
-        toolsFirebase.sendDataToFirestore(
+
+        toolsFirebase.listenData(
                 Constants.DB_USER,
                 txtUsername.getEditText().getText().toString(),
-                mapData,
-                SetOptions.merge(),
-                new ToolsFirebase.SendToolsListener() {
-                    @Override
-                    public void onComplete(Task<Void> task) {
-                        getMvpView().registerSuccess();
-                    }
+                documentSnapshot -> {
+                    Log.d(TAG, "doRegister: "+(documentSnapshot.exists()));
+                    if (!documentSnapshot.exists()) {
+                        Map<String, String> mapData = new HashMap<>();
+                        mapData.put(Constants.FIELD_USERNAME, txtUsername.getEditText().getText().toString());
+                        mapData.put(Constants.FIELD_PASSWORD, txtPassword.getEditText().getText().toString());
+                        toolsFirebase.sendDataToFirestore(
+                                Constants.DB_USER,
+                                txtUsername.getEditText().getText().toString(),
+                                mapData,
+                                SetOptions.merge(),
+                                new ToolsFirebase.SendToolsListener() {
+                                    @Override
+                                    public void onComplete(Task<Void> task) {
+                                        getMvpView().registerSuccess();
+                                    }
 
-                    @Override
-                    public void onSuccess(Void task) {
-                        getMvpView().registerSuccess();
-                    }
+                                    @Override
+                                    public void onSuccess(Void task) {
+                                        getMvpView().registerSuccess();
+                                    }
 
-                    @Override
-                    public void onError(Exception e) {
+                                    @Override
+                                    public void onError(Exception e) {
+                                        getMvpView().registerFailed();
+                                    }
+                                }
+                        );
+                    } else {
                         getMvpView().registerFailed();
                     }
-                }
-        );
+                });
     }
 }
