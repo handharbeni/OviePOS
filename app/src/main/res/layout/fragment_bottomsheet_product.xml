@@ -9,8 +9,16 @@
     android:padding="30dp"
     app:behavior_peekHeight="290dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
-
+    <androidx.appcompat.widget.AppCompatImageView
+        android:padding="10dp"
+        android:adjustViewBounds="true"
+        android:id="@+id/txtProductImage"
+        android:src="@drawable/aster"
+        android:background="@color/grayOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatSpinner
+        android:layout_marginTop="18dp"
         android:id="@+id/txtProductCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

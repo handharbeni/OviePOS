@@ -30,6 +30,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,7 +112,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
 
     void init() {
         ButterKnife.bind(this, view);
-        paymentPresenter = new PaymentPresenter(getActivity(), this);
+        paymentPresenter = new PaymentPresenter(Objects.requireNonNull(getActivity()), this);
         paymentPresenter.attachView(this);
 
         paymentPresenter.init();
@@ -119,7 +120,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
 
     @Override
     public void initOrderType(List<Constants.TRANSACTION_TYPE> orderType) {
-        ArrayAdapter adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
+        ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()).getApplicationContext(),
                 android.R.layout.simple_spinner_item,
                 orderType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -128,7 +129,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
 
     @Override
     public void initPaymentType(List<Constants.PAYMENT_TYPE> paymentsType) {
-        ArrayAdapter adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
+        ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()).getApplicationContext(),
                 android.R.layout.simple_spinner_item,
                 paymentsType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -163,32 +164,41 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
 
     @OnClick(R.id.btnPay)
     public void onPayClick() {
-        List<TransactionItems> listItem = new ArrayList<>();
-        for (Cart cart : listCarts) {
-            TransactionItems items = new TransactionItems();
-            items.setProductId(cart.getProductId());
-            items.setProductName(cart.getProductName());
-            items.setProductPrice(cart.getProductPrice());
-            items.setQty(cart.getQty());
-            listItem.add(items);
-        }
-        Transactions transactions = new Transactions();
-        transactions.setPaymentType(paymentType.getSelectedItem().toString());
-        transactions.setTransactionsType(transactionType.getSelectedItem().toString());
-        transactions.setCustomerName(customerName);
-        transactions.setDiscountType(discountType);
-        transactions.setDiscountValue(discountValue);
-        transactions.setPajakValue(ppn);
-        transactions.setDateNow(System.currentTimeMillis());
-        transactions.setTimeIn(System.currentTimeMillis());
-        transactions.setTimeOut(System.currentTimeMillis());
+        String sPaymentInput = Objects.requireNonNull(paymentInput.getText()).toString();
+        try {
+            if (Integer.parseInt(sPaymentInput) < total){
+                paymentInput.setError("Cannot be less than Total");
+            } else {
+                List<TransactionItems> listItem = new ArrayList<>();
+                for (Cart cart : listCarts) {
+                    TransactionItems items = new TransactionItems();
+                    items.setProductId(cart.getProductId());
+                    items.setProductName(cart.getProductName());
+                    items.setProductPrice(cart.getProductPrice());
+                    items.setQty(cart.getQty());
+                    listItem.add(items);
+                }
+                Transactions transactions = new Transactions();
+                transactions.setPaymentType(paymentType.getSelectedItem().toString());
+                transactions.setTransactionsType(transactionType.getSelectedItem().toString());
+                transactions.setCustomerName(customerName);
+                transactions.setDiscountType(discountType);
+                transactions.setDiscountValue(discountValue);
+                transactions.setPajakValue(ppn);
+                transactions.setDateNow(System.currentTimeMillis());
+                transactions.setTimeIn(System.currentTimeMillis());
+                transactions.setTimeOut(System.currentTimeMillis());
 
-        paymentPresenter.doPayment(transactions, listItem, discountValue, ppn);
+                paymentPresenter.doPayment(transactions, listItem, discountValue, ppn);
+            }
+        } catch ( Exception e ) {
+            paymentInput.setError("Cannot be less than Total");
+        }
     }
 
     @Override
     public void initPaymentCashless(List<Constants.PAYMENT_CASHLESS> paymentCashsless) {
-        ArrayAdapter adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
+        ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()).getApplicationContext(),
                 android.R.layout.simple_spinner_item,
                 paymentCashsless);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -198,7 +208,7 @@ public class PaymentBottomsheet extends BaseBottomFragments implements PaymentUI
     @Override
     public void initListCart(List<Cart> listCarts) {
         this.listCarts = listCarts;
-        cartAdapter = new CartAdapter(getActivity().getApplicationContext(),
+        cartAdapter = new CartAdapter(Objects.requireNonNull(getActivity()).getApplicationContext(),
                 listCarts,
                 this,
                 true);

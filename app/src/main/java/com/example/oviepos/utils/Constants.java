@@ -21,16 +21,17 @@ public class Constants {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.INTERNET,
             Manifest.permission.BLUETOOTH,
-            Manifest.permission.BLUETOOTH_ADMIN
+            Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.CAMERA
     };
 
-    public static enum DISCOUNT_TYPE{
+    public enum DISCOUNT_TYPE{
         NOMINAL_VALUE("NOMINAL"),
         PERCENT_VALUE("PROSENTASE");
 
         private final String name;
 
-        private DISCOUNT_TYPE(String name) {
+        DISCOUNT_TYPE(String name) {
             this.name = name;
         }
 
@@ -43,13 +44,13 @@ public class Constants {
         }
     }
 
-    public static enum TRANSACTION_TYPE {
+    public enum TRANSACTION_TYPE {
         TAKE_AWAY("TAKE AWAY"),
         DINE_IN("DINE IN");
 
         private final String name;
 
-        private TRANSACTION_TYPE(String s) {
+        TRANSACTION_TYPE(String s) {
             name = s;
         }
 
@@ -62,13 +63,13 @@ public class Constants {
         }
     }
 
-    public static enum PAYMENT_TYPE {
+    public enum PAYMENT_TYPE {
         CASH("CASH"),
         CASHLESS("CASHLESS");
 
         private final String name;
 
-        private PAYMENT_TYPE(String s) {
+        PAYMENT_TYPE(String s) {
             name = s;
         }
 
@@ -81,7 +82,7 @@ public class Constants {
         }
     }
 
-    public static enum PAYMENT_CASHLESS {
+    public enum PAYMENT_CASHLESS {
         BCA("BCA"),
         BRI("BRI"),
         MANDIRI("MANDIRI"),
@@ -92,7 +93,7 @@ public class Constants {
 
         private final String name;
 
-        private PAYMENT_CASHLESS(String s) {
+        PAYMENT_CASHLESS(String s) {
             name = s;
         }
 
@@ -105,13 +106,13 @@ public class Constants {
         }
     }
 
-    public static enum REPORT_TYPE {
+    public enum REPORT_TYPE {
         TRANSACTION("TRANSACTION"),
         CUSTOMER("CUSTOMER");
 
         private final String name;
 
-        private REPORT_TYPE(String s) {
+        REPORT_TYPE(String s) {
             name = s;
         }
 

@@ -12,8 +12,11 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.oviepos.R;
+import com.example.oviepos.databases.AppDB;
 import com.example.oviepos.databases.models.responses.Cart;
+import com.example.oviepos.databases.models.responses.Products;
 import com.example.oviepos.utils.Utils;
 
 import java.util.List;
@@ -25,7 +28,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private Context context;
     private List<Cart> listCart;
     private CartAdapterInterface cartAdapterInterface;
-    private boolean isPayment = false;
+    private boolean isPayment;
 
     public CartAdapter(Context context, List<Cart> listCart, CartAdapterInterface cartAdapterInterface, boolean isPayment) {
         this.context = context;
@@ -78,6 +81,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
 
         public void bindData(Cart cart) {
+            try {
+                Products products = AppDB.getInstance(context).products().getProductsById(cart.getProductId());
+                Glide.with(context).load(products.getProductImage()).into(txtProductImage);
+            } catch ( Exception e ){
+                Glide.with(context).load(R.drawable.aster).into(txtProductImage);
+            }
             txtProductName.setText(cart.getProductName());
             txtProductPrice.setText(Utils.formatRupiah(Integer.parseInt(cart.getProductPrice())));
             txtQty.setText(String.valueOf(cart.getQty()));

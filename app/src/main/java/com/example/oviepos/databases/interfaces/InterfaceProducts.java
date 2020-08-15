@@ -13,10 +13,10 @@ import java.util.List;
 
 @Dao
 public interface InterfaceProducts {
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert()
     void insertAll(List<Products> productsList);
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert()
     void insert(Products products);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -31,7 +31,9 @@ public interface InterfaceProducts {
     @Query("SELECT * FROM Products WHERE productCategory = :productCategory")
     List<Products> getByCategory(int productCategory);
 
-
     @Query("SELECT * FROM Products WHERE id = :id")
     List<Products> getById(int id);
+
+    @Query("SELECT * FROM Products WHERE id = :id")
+    Products getProductsById(int id);
 }
