@@ -89,4 +89,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.5.0'
     implementation 'com.github.GrenderG:Toasty:1.4.2'
     implementation 'com.kaopiz:kprogresshud:1.2.0'
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.8'
 }

@@ -1,7 +1,9 @@
 package com.example.oviepos.presenters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.CountDownTimer;
+import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 
@@ -9,7 +11,9 @@ import com.example.oviepos.R;
 import com.example.oviepos.firebase_helper.ToolsFirebase;
 import com.example.oviepos.utils.AppPreferences;
 import com.example.oviepos.utils.Constants;
+import com.example.oviepos.utils.CoreApplication;
 import com.example.oviepos.views.MainUIView;
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
@@ -26,6 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import rx.Subscription;
 
 public class MainPresenter extends BasePresenter<MainUIView> {
@@ -134,6 +140,11 @@ public class MainPresenter extends BasePresenter<MainUIView> {
             getMvpView().loginFailed();
             return;
         }
+
+        if (!isConnected()){
+            getMvpView().loginFailed();
+            return;
+        }
         toolsFirebase.listenData(
                 Constants.DB_USER,
                 txtUsername.getEditText().getText().toString(),
@@ -173,7 +184,10 @@ public class MainPresenter extends BasePresenter<MainUIView> {
             getMvpView().registerFailed();
             return;
         }
-
+        if (!isConnected()){
+            getMvpView().registerFailed();
+            return;
+        }
         toolsFirebase.listenData(
                 Constants.DB_USER,
                 txtUsername.getEditText().getText().toString(),
@@ -208,5 +222,21 @@ public class MainPresenter extends BasePresenter<MainUIView> {
                         getMvpView().registerFailed();
                     }
                 });
+    }
+
+    @SuppressLint("CheckResult")
+    boolean isConnected(){
+//        final boolean[] isConnect = {false};
+//        ReactiveNetwork
+//                .observeInternetConnectivity()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(isConnectedToInternet -> {
+//                    // do something with isConnectedToInternet value
+//                    Log.d("TAG", "checkingNetwork: "+isConnectedToInternet);
+//                    isConnect[0] = isConnectedToInternet;
+//                });
+//        return isConnect[0];
+        return CoreApplication.isConnected;
     }
 }
