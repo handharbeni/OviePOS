@@ -2,7 +2,6 @@ package com.example.oviepos.presenters;
 
 import android.app.Activity;
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 
@@ -14,7 +13,6 @@ import com.example.oviepos.views.MainUIView;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -27,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import rx.Subscription;
 
@@ -144,7 +141,6 @@ public class MainPresenter extends BasePresenter<MainUIView> {
                     if (documentSnapshot.exists()) {
                         try {
                             String passwordDb = documentSnapshot.get(Constants.FIELD_PASSWORD).toString();
-                            Log.d(TAG, "doLogin: "+passwordDb);
                             if (passwordDb.equalsIgnoreCase(txtPassword.getEditText().getText().toString())) {
                                 AppPreferences.getInstance(activity.getApplicationContext())
                                         .setPref(Constants.USERNAME, Objects.requireNonNull(txtUsername.getEditText()).getText().toString());
@@ -182,7 +178,6 @@ public class MainPresenter extends BasePresenter<MainUIView> {
                 Constants.DB_USER,
                 txtUsername.getEditText().getText().toString(),
                 documentSnapshot -> {
-                    Log.d(TAG, "doRegister: "+(documentSnapshot.exists()));
                     if (!documentSnapshot.exists()) {
                         Map<String, String> mapData = new HashMap<>();
                         mapData.put(Constants.FIELD_USERNAME, txtUsername.getEditText().getText().toString());
