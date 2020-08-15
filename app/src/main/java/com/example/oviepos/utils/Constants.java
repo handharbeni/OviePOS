@@ -25,6 +25,11 @@ public class Constants {
             Manifest.permission.CAMERA
     };
 
+    public static String FIELD_USERNAME = "username";
+    public static String FIELD_PASSWORD = "password";
+
+    public static String DB_USER = "db_aster";
+
     public enum DISCOUNT_TYPE{
         NOMINAL_VALUE("NOMINAL"),
         PERCENT_VALUE("PROSENTASE");

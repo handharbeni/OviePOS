@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
@@ -33,11 +32,13 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.zj.btsdk.BluetoothService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends BaseActivity implements MainUIView, AccountCallback, BluetoothHandler.HandlerInterface {
     private static String TAG = MainActivity.class.getSimpleName();
@@ -62,6 +63,8 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     MaterialButton btnLogin;
     @BindView(R.id.btnRegister)
     MaterialButton btnRegister;
+    @BindView(R.id.btnDaftar)
+    MaterialButton btnDaftar;
 
     @BindView(R.id.btnGroup)
     MaterialButtonToggleGroup btnGroup;
@@ -86,7 +89,6 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     MainPresenter mainPresenter;
 
-
     public static final int RC_BLUETOOTH = 0;
     public static final int RC_CONNECT_DEVICE = 1;
     public static final int RC_ENABLE_BLUETOOTH = 2;
@@ -94,6 +96,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     public static BluetoothService mService = null;
     public static boolean isPrinterReady = false;
 
+    private KProgressHUD progressDialog;
 
     private AccountFragment accountFragment;
     private CartFragment cartFragment;
@@ -109,6 +112,21 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
         setContentView(R.layout.activity_main);
 
         init();
+    }
+
+    void showProgressDialog(){
+        progressDialog = KProgressHUD.create(MainActivity.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+    }
+
+    void hideProgressDialog(){
+        if (progressDialog != null){
+            progressDialog.dismiss();
+        }
     }
 
     void init() {
@@ -136,7 +154,12 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btnLogin:
-                mainPresenter.doLogin(txtUsername, txtPassword);
+                showProgressDialog();
+                if (btnLogin.getText().toString().equalsIgnoreCase("SIGN IN")){
+                    mainPresenter.doLogin(txtUsername, txtPassword);
+                } else if(btnLogin.getText().toString().equalsIgnoreCase("SIGN UP")){
+                    mainPresenter.doRegister(txtUsername, txtPassword);
+                }
                 break;
             case R.id.btnRegister:
 //                mainPresenter.doLogin();
@@ -220,22 +243,26 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     @Override
     public void loginSuccess() {
+        hideProgressDialog();
         mainPresenter.decisionScreen();
     }
 
     @Override
     public void loginFailed() {
-
+        hideProgressDialog();
+        Toasty.error(this, "Sign in Failed, Check your username and password", Toast.LENGTH_SHORT, true).show();
     }
 
     @Override
     public void registerSuccess() {
-
+        hideProgressDialog();
+        Toasty.success(this, "Sign up Success, Please Login", Toast.LENGTH_SHORT, true).show();
     }
 
     @Override
     public void registerFailed() {
-
+        hideProgressDialog();
+        Toasty.error(this, "Sign up Failed, Please Try Again Later", Toast.LENGTH_SHORT, true).show();
     }
 
     @Override
@@ -245,12 +272,13 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     @Override
     public void permissionDenied() {
-        Toast.makeText(this, "some permission are denied, please accept in the future", Toast.LENGTH_SHORT).show();
+        Toasty.error(this, "some permission are denied, please accept in the future", Toast.LENGTH_SHORT, true).show();
         mainPresenter.decisionScreen();
     }
 
     @Override
     public void logoutSuccess() {
+        hideProgressDialog();
         mainPresenter.decisionScreen();
     }
 
@@ -263,6 +291,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     @Override
     public void onDeviceConnected() {
+        hideProgressDialog();
         isPrinterReady = true;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_connected);
         if (accountFragment != null) {
@@ -272,6 +301,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     @Override
     public void onDeviceConnecting() {
+        hideProgressDialog();
         isPrinterReady = false;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
         if (accountFragment != null) {
@@ -281,6 +311,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     @Override
     public void onDeviceConnectionLost() {
+        hideProgressDialog();
         isPrinterReady = false;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
         if (accountFragment != null) {
@@ -290,6 +321,7 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
 
     @Override
     public void onDeviceUnableToConnect() {
+        hideProgressDialog();
         isPrinterReady = false;
         iconThermalPrinter.setImageResource(R.drawable.ic_print_disconnected);
         if (accountFragment != null) {
@@ -324,6 +356,17 @@ public class MainActivity extends BaseActivity implements MainUIView, AccountCal
                     mService.connect(mDevice);
                 }
                 break;
+        }
+    }
+
+    @OnClick(R.id.btnDaftar)
+    public void switchLayout(){
+        if (btnLogin.getText().toString().equalsIgnoreCase("SIGN IN")){
+            btnLogin.setText("SIGN UP");
+            btnDaftar.setText("SIGN IN HERE");
+        } else if (btnLogin.getText().toString().equalsIgnoreCase("SIGN UP")) {
+            btnLogin.setText("SIGN IN");
+            btnDaftar.setText("SIGN UP HERE");
         }
     }
 }

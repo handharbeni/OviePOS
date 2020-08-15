@@ -16,6 +16,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oviepos.MainActivity;
 import com.example.oviepos.R;
 import com.example.oviepos.adapters.ReportCustomerAdapter;
 import com.example.oviepos.adapters.ReportTransactionAdapter;
@@ -27,6 +28,7 @@ import com.example.oviepos.utils.BaseFragments;
 import com.example.oviepos.utils.Constants;
 import com.example.oviepos.utils.Utils;
 import com.example.oviepos.views.ReportUIView;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
+import es.dmoral.toasty.Toasty;
 
 import static com.example.oviepos.MainActivity.isPrinterReady;
 import static com.example.oviepos.MainActivity.mService;
@@ -65,6 +68,7 @@ public class ReportFragment extends BaseFragments
     List<HashMap<Transactions, List<TransactionItems>>> listReportCustomer = new ArrayList<>();
 
     ProgressDialog progressDialog;
+    private KProgressHUD progressDialogs;
 
     public static ReportFragment getInstance() {
         return new ReportFragment();
@@ -83,6 +87,23 @@ public class ReportFragment extends BaseFragments
         init();
         return view;
     }
+
+
+    void showProgressDialog(){
+        progressDialogs = KProgressHUD.create(getActivity())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+    }
+
+    void hideProgressDialog(){
+        if (progressDialogs != null){
+            progressDialogs.dismiss();
+        }
+    }
+
 
     void init() {
         ButterKnife.bind(this, view);
@@ -147,16 +168,19 @@ public class ReportFragment extends BaseFragments
 
     @Override
     public void onUploadSuccess() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
+        Toasty.success(getActivity(), "CREATE AND UPLOAD SUCCESS", Toast.LENGTH_SHORT, true).show();
+        hideProgressDialog();
+//        if (progressDialog != null) {
+//            progressDialog.dismiss();
+//        }
     }
 
     @Override
     public void onUploading() {
-        progressDialog = Utils.progressDialog(getActivity(), "Uploading Log");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+//        progressDialog = Utils.progressDialog(getActivity(), "Uploading Log");
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
+        showProgressDialog();
     }
 
     @Override
